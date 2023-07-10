@@ -1,0 +1,136 @@
+{% load static %}
+{% load thumbnail %}
+
+
+<div class="modal-popup">
+    <div class="modal fade" id="signupPopupForm" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title title" id="exampleModalLongTitle">ثبت نام</h5>
+                        <p class="font-size-14">سلام! خوش اومدی ، ایجاد یک حساب جدید</p>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="la la-close"></span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="contact-form-action">
+
+                        <p class="alert-success" role="alert" id="success-message">
+
+                        </p>
+
+
+
+                        <form method="post" action="{% url 'register_page' %}" id="register-form">
+                            {% csrf_token %}
+                            {{ errors.email }}
+
+                            <div class="input-box">
+                                <label class="label-text">نام کاربری</label>
+                                <div class="form-group">
+                                    <span class="la la-user form-icon"></span>
+
+                                    <input class="form-control" type="text" name="username" placeholder="نام کاربریت رو وارد کن">
+
+                                </div>
+                            </div><!-- end input-box -->
+
+                            <div class="input-box">
+                                <label class="label-text">آدرس ایمیل</label>
+                                <div class="form-group">
+                                    <span class="la la-envelope form-icon"></span>
+
+                                    <input class="form-control" type="text" name="email" placeholder="ایمیلت رو وارد کن">
+
+                                    <div class="alert-danger" role="alert" id="email-error">
+
+                                    </div>
+                                </div>
+                            </div><!-- end input-box -->
+
+                            <div class="input-box">
+                                <label class="label-text">رمز عبور</label>
+                                <div class="form-group">
+                                    <span class="la la-lock form-icon"></span>
+
+                                    <input class="form-control" type="text" name="password" placeholder="رمزعبورت رو وارد کن">
+                                </div>
+                            </div><!-- end input-box -->
+
+                            <div class="input-box">
+                                <label class="label-text">تکرار رمز عبور</label>
+                                <div class="form-group">
+                                    <span class="la la-lock form-icon"></span>
+
+                                    <input class="form-control" type="text" name="passwordconfirm" placeholder="رمزعبورت رو دوباره وارد کن">
+
+                                    <div class="alert-danger" role="alert" id="password-error">
+
+                                    </div>
+                                </div>
+                            </div><!-- end input-box -->
+
+                            <div class="btn-box pt-3 pb-4">
+                                <button type="submit" class="theme-btn w-100">ثبت حساب</button>
+                            </div>
+
+                            <div class="action-box text-center">
+                                <p class="font-size-14">یا با استفاده از حساب های زیر ثبت نام کن</p>
+                                <ul class="social-profile py-3">
+                                    <li><a href="#" class="bg-5 text-white"><i class="lab la-facebook-f"></i></a></li>
+                                    <li><a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a></li>
+                                    <li><a href="#" class="bg-7 text-white"><i class="lab la-instagram"></i></a></li>
+                                    <li><a href="#" class="bg-5 text-white"><i class="lab la-linkedin-in"></i></a></li>
+                                </ul>
+                            </div>
+
+                        </form>
+
+                    </div><!-- end contact-form-action -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    const form = document.querySelector('#register-form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        if (result.errors) {
+            // نمایش پیام خطا
+
+
+            const emailError = document.querySelector('#email-error');
+            emailError.textContent = result.errors.email || '';
+
+            const passwordError = document.querySelector('#password-error');
+            passwordError.textContent = result.errors.password || '';
+        } else {
+            // نمایش پیام موفقیت
+            const successMessage = document.querySelector('#success-message');
+            successMessage.textContent = result.message;
+
+            // پاک کردن مقادیر فرم
+            form.reset();
+        }
+    });
+</script>
+

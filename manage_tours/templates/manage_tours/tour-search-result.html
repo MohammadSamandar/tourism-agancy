@@ -1,0 +1,609 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{#{% load poll_extras %}#}
+{% load render_partial %}
+
+
+{% block title %}
+   نتایج جستجوی تورها
+{% endblock %}
+
+{% block content %}
+
+
+
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area bread-bg">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="search-result-content">
+                        <div class="section-heading">
+                            <h2 class="sec__title text-white">نتایج جستجوی تور</h2>
+                        </div>
+                        <div class="search-fields-container margin-top-30px">
+                            <div class="contact-form-action">
+                                <form action="#" class="row">
+                                    <div class="col-lg-3 col-sm-6 pr-0">
+                                        <div class="input-box">
+                                            <label class="label-text">مقصد</label>
+                                            <div class="form-group">
+                                                <span class="la la-map-marker form-icon"></span>
+                                                <input class="form-control" type="text" placeholder="کجا میخوای بری؟">
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-3 -->
+                                    <div class="col-lg-3 col-sm-6 pr-0">
+                                        <div class="input-box">
+                                            <label class="label-text">تاریخ حرکت - تاریخ برگشت</label>
+                                            <div class="form-group">
+                                                <span class="la la-calendar form-icon"></span>
+                                                <input class="date-range form-control" type="text" name="daterange">
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-3 -->
+                                    <div class="col-lg-3 col-sm-6 pr-0">
+                                        <div class="input-box">
+                                            <label class="label-text">بزرگسال (18+)</label>
+                                            <div class="form-group">
+                                                <div class="select-contain w-auto">
+                                                    <select class="select-contain-select">
+                                                        <option value="0">تعداد بزرگسال</option>
+                                                        <option value="1">1 بزرگسال</option>
+                                                        <option value="2">2 بزرگسال</option>
+                                                        <option value="3">3 بزرگسال</option>
+                                                        <option value="4">4 بزرگسال</option>
+                                                        <option value="5">5 بزرگسال</option>
+                                                        <option value="6">6 بزرگسال</option>
+                                                        <option value="7">7 بزرگسال</option>
+                                                        <option value="8">8 بزرگسال</option>
+                                                        <option value="9">9 بزرگسال</option>
+                                                        <option value="10">10 بزرگسال</option>
+                                                        <option value="11">11 بزرگسال</option>
+                                                        <option value="12">12 بزرگسال</option>
+                                                        <option value="13">13 بزرگسال</option>
+                                                        <option value="14">14 بزرگسال</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-3 -->
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="input-box">
+                                            <label class="label-text">کودک (17-0)</label>
+                                            <div class="form-group">
+                                                <div class="select-contain w-auto">
+                                                    <select class="select-contain-select">
+                                                        <option value="0">تعداد کودک </option>
+                                                        <option value="1">1 کودک </option>
+                                                        <option value="2">2 کودک </option>
+                                                        <option value="3">3 کودک </option>
+                                                        <option value="4">4 کودک </option>
+                                                        <option value="5">5 کودک </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-3 -->
+                                </form>
+                            </div>
+                            <div class="advanced-wrap">
+                                <a class="btn collapse-btn theme-btn-hover-gray font-size-15" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">
+                                    گزینه های بیشتر <i class="la la-angle-down ml-1"></i>
+                                </a>
+                                <div class="pt-3 collapse" id="collapseTwo">
+                                    <div class="slider-range-wrap ">
+                                        <div class="price-slider-amount padding-bottom-20px">
+                                            <label for="amount" class="filter__label">قیمت :</label>
+                                            <input type="text" id="amount" class="amounts" readonly>
+                                        </div><!-- end price-slider-amount -->
+                                        <div id="slider-range"></div><!-- end slider-range -->
+                                    </div><!-- end slider-range-wrap -->
+                                    <div class="checkbox-wrap padding-top-30px">
+                                        <h3 class="title font-size-15 pb-3">دسته بندی تورها</h3>
+                                        <div class="custom-checkbox d-inline-block mr-4">
+                                            <input type="checkbox" id="cat1">
+                                            <label for="cat1">سفرهای شهری</label>
+                                        </div>
+                                        <div class="custom-checkbox d-inline-block mr-4">
+                                            <input type="checkbox" id="cat2">
+                                            <label for="cat2">کمپینگ در مناطق بکر</label>
+                                        </div>
+                                        <div class="custom-checkbox d-inline-block mr-4">
+                                            <input type="checkbox" id="cat3">
+                                            <label for="cat3">تورهای گردشگری</label>
+                                        </div>
+                                        <div class="custom-checkbox d-inline-block mr-4">
+                                            <input type="checkbox" id="cat4">
+                                            <label for="cat4">اکوتوریسم</label>
+                                        </div>
+                                        <div class="custom-checkbox d-inline-block mr-4">
+                                            <input type="checkbox" id="cat5">
+                                            <label for="cat5">تورهای اسکورت </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-box pt-3">
+                                <a href="#" class="theme-btn">جستجو</a>
+                            </div>
+                        </div><!-- end main-search-input -->
+                    </div><!-- end search-result-content -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+    <div class="bread-svg-box">
+        <svg class="bread-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><polygon points="100 0 50 10 0 0 0 10 100 10"></polygon></svg>
+    </div><!-- end bread-svg -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+
+<!-- ================================
+    START CARD AREA
+================================= -->
+<section class="card-area section--padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="filter-wrap margin-bottom-30px">
+                    <div class="filter-top d-flex align-items-center justify-content-between pb-4">
+                        <div>
+                            <h3 class="title font-size-24">نیویورک: 22 تور پیدا شد</h3>
+                            <p class="font-size-14 line-height-20 pt-1">با اطمینان رزرو کنید: بدون هزینه رزرو </p>
+                        </div>
+                        <div class="layout-view d-flex align-items-center">
+                            <a href="tour-grid.html" data-toggle="tooltip" data-placement="top" title="نمای گرید" class="active"><i class="la la-th-large"></i></a>
+                            <a href="tour-list.html" data-toggle="tooltip" data-placement="top" title="نمای لیست"><i class="la la-th-list"></i></a>
+                        </div>
+                    </div><!-- end filter-top -->
+                    <div class="filter-bar d-flex align-items-center justify-content-between">
+                        <div class="filter-bar-filter d-flex flex-wrap align-items-center">
+                            <div class="filter-option">
+                                <h3 class="title font-size-16">فیلتر بر اساس :</h3>
+                            </div>
+                            <div class="filter-option">
+                                <div class="dropdown dropdown-contain">
+                                    <a class="dropdown-toggle dropdown-btn dropdown--btn" href="#" role="button" data-toggle="dropdown">
+                                        قیمت
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-wrap">
+                                        <div class="dropdown-item">
+                                            <div class="slider-range-wrap">
+                                                <div class="price-slider-amount padding-bottom-20px">
+                                                    <label for="amount2" class="filter__label">قیمت :</label>
+                                                    <input type="text" id="amount2" class="amounts">
+                                                </div><!-- end price-slider-amount -->
+                                                <div id="slider-range2"></div><!-- end slider-range -->
+                                            </div><!-- end slider-range-wrap -->
+                                            <div class="btn-box pt-4">
+                                                <button class="theme-btn theme-btn-small theme-btn-transparent" type="button">اعمال </button>
+                                            </div>
+                                        </div><!-- end dropdown-item -->
+                                    </div><!-- end dropdown-menu -->
+                                </div><!-- end dropdown -->
+                            </div>
+                            <div class="filter-option">
+                                <div class="dropdown dropdown-contain">
+                                    <a class="dropdown-toggle dropdown-btn dropdown--btn" href="#" role="button" data-toggle="dropdown">
+                                       رتبه 
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-wrap">
+                                        <div class="dropdown-item">
+                                            <div class="checkbox-wrap">
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="r1">
+                                                    <label for="r1">
+                                                        <span class="ratings d-flex align-items-center">
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <span class="color-text-3 font-size-13 ml-1">(55.590)</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="r2">
+                                                    <label for="r2">
+                                                        <span class="ratings d-flex align-items-center">
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <span class="color-text-3 font-size-13 ml-1">(40.590)</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="r3">
+                                                    <label for="r3">
+                                                        <span class="ratings d-flex align-items-center">
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <span class="color-text-3 font-size-13 ml-1">(23.590)</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="r4">
+                                                    <label for="r4">
+                                                        <span class="ratings d-flex align-items-center">
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <span class="color-text-3 font-size-13 ml-1">(12.590)</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="r5">
+                                                    <label for="r5">
+                                                        <span class="ratings d-flex align-items-center">
+                                                            <i class="la la-star"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <i class="la la-star-o"></i>
+                                                            <span class="color-text-3 font-size-13 ml-1">(590)</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div><!-- end dropdown-item -->
+                                    </div><!-- end dropdown-menu -->
+                                </div><!-- end dropdown -->
+                            </div>
+                            <div class="filter-option">
+                                <div class="dropdown dropdown-contain">
+                                    <a class="dropdown-toggle dropdown-btn dropdown--btn" href="#" role="button" data-toggle="dropdown">
+                                       دسته بندی ها
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-wrap">
+                                        <div class="dropdown-item">
+                                            <div class="checkbox-wrap">
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb1">
+                                                    <label for="catChb1">تورهای ماجراجویی فعال</label>
+                                                </div>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb2">
+                                                    <label for="catChb2">اکوتوریسم</label>
+                                                </div>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb3">
+                                                    <label for="catChb3">تورهای اسکورت </label>
+                                                </div>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb4">
+                                                    <label for="catChb4">تورهای دور دنیا </label>
+                                                </div>
+                                                 <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb5">
+                                                    <label for="catChb5">تورهای گروهی</label>
+                                                </div>
+                                                 <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb6">
+                                                    <label for="catChb6">تورهای خانوادگی</label>
+                                                </div>
+                                                 <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb7">
+                                                    <label for="catChb7">تورهای شهری</label>
+                                                </div>
+                                                 <div class="custom-checkbox">
+                                                    <input type="checkbox" id="catChb8">
+                                                    <label for="catChb8">تورهای پارک ملی</label>
+                                                </div>
+                                            </div>
+                                        </div><!-- end dropdown-item -->
+                                    </div><!-- end dropdown-menu -->
+                                </div><!-- end dropdown -->
+                            </div>
+                        </div><!-- end filter-bar-filter -->
+                        <div class="select-contain">
+                            <select class="select-contain-select">
+                                <option value="1">مرتب سازی پیشفرض</option>
+                                <option value="2">جدید ترین</option>
+                                <option value="3">ارزان ترین</option>
+                                <option value="4">گران ترین</option>
+                                <option value="5">الف تا ی</option>
+                            </select>
+                        </div><!-- end select-contain -->
+                    </div><!-- end filter-bar -->
+                </div><!-- end filter-wrap -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+        <div class="row">
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item">
+                    <div class="card-img">
+                        <a href="tour-details.html" class="d-block">
+                            <img src="{% static 'main_page/images/img9.jpg' %}" alt="Destination-img">
+                        </a>
+                        <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="ذخیره">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"><a href="tour-details.html">تور زمستانه در پیست امپایر استیت</a></h3>
+                        <p class="card-meta">خیابان 124 لا ویستا، نیویورک</p>
+                        <div class="card-rating">
+                            <span class="badge text-white">4.4/5</span>
+                            <span class="review__text">متوسط</span>
+                            <span class="rating__text">(30 نظر)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">از </span>
+                                <span class="price__num">1,120  تومان</span>
+                            </p>
+                            <span class="tour-hour"><i class="la la-clock-o mr-1"></i>تمام روز</span>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item">
+                    <div class="card-img">
+                        <a href="tour-details.html" class="d-block">
+                            <img src="{% static 'main_page/images/img10.jpg' %}" alt="Destination-img">
+                        </a>
+                        <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="ذخیره">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                        <span class="badge">پرفروش ترین </span>
+                        <span class="badge badge-ribbon">24٪ تخفیف</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"><a href="tour-details.html">تور جنوب ، کلبه های ساحلی</a></h3>
+                        <p class="card-meta">کیش ، ایران</p>
+                        <div class="card-rating">
+                            <span class="badge text-white">4.4/5</span>
+                            <span class="review__text">متوسط</span>
+                            <span class="rating__text">(30 نظر)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">از </span>
+                                <span class="price__num">1,000  تومان</span>
+                                <span class="price__num before-price color-text-3">1,120  تومان</span>
+                            </p>
+                            <span class="tour-hour"><i class="la la-clock-o mr-1"></i>7 روز</span>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item">
+                    <div class="card-img">
+                        <a href="tour-details.html" class="d-block">
+                            <img src="{% static 'main_page/images/img11.jpg' %}" alt="Destination-img">
+                        </a>
+                        <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="ذخیره">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"><a href="tour-details.html">تور دریایی پل گلدن گیت</a></h3>
+                        <p class="card-meta">خیابان 124 لا ویستا، نیویورک</p>
+                        <div class="card-rating">
+                            <span class="badge text-white">4.4/5</span>
+                            <span class="review__text">متوسط</span>
+                            <span class="rating__text">(30 نظر)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">از </span>
+                                <span class="price__num">1,120  تومان</span>
+                            </p>
+                            <span class="tour-hour"><i class="la la-clock-o mr-1"></i>8 ساعات</span>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item">
+                    <div class="card-img">
+                        <a href="tour-details.html" class="d-block">
+                            <img src="{% static 'main_page/images/img12.jpg' %}" alt="Destination-img">
+                        </a>
+                        <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="ذخیره">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                        <span class="badge">ویژه</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"><a href="tour-details.html">2 ساعت اسب سواری با مربی</a></h3>
+                        <p class="card-meta">خیابان 124 لا ویستا، نیویورک</p>
+                        <div class="card-rating">
+                            <span class="badge text-white">4.4/5</span>
+                            <span class="review__text">متوسط</span>
+                            <span class="rating__text">(30 نظر)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">از </span>
+                                <span class="price__num">1,120  تومان</span>
+                            </p>
+                            <span class="tour-hour"><i class="la la-clock-o mr-1"></i>2 ساعت</span>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item">
+                    <div class="card-img">
+                        <a href="tour-details.html" class="d-block">
+                            <img src="{% static 'main_page/images/img13.jpg' %}" alt="Destination-img">
+                        </a>
+                        <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="ذخیره">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"><a href="tour-details.html">غواصی در ساحل بویتون</a></h3>
+                        <p class="card-meta">خیابان 124 لا ویستا، نیویورک</p>
+                        <div class="card-rating">
+                            <span class="badge text-white">4.4/5</span>
+                            <span class="review__text">متوسط</span>
+                            <span class="rating__text">(30 نظر)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">از </span>
+                                <span class="price__num">1,120  تومان</span>
+                            </p>
+                            <span class="tour-hour"><i class="la la-clock-o mr-1"></i>3-5 ساعات</span>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item">
+                    <div class="card-img">
+                        <a href="tour-details.html" class="d-block">
+                            <img src="{% static 'main_page/images/img14.jpg' %}" alt="Destination-img">
+                        </a>
+                        <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="ذخیره">
+                            <i class="la la-heart-o"></i>
+                        </div>
+                        <span class="badge">ویژه</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"><a href="tour-details.html">تور بوم گردی کایاک تونل</a></h3>
+                        <p class="card-meta">خیابان 124 لا ویستا، نیویورک</p>
+                        <div class="card-rating">
+                            <span class="badge text-white">4.4/5</span>
+                            <span class="review__text">متوسط</span>
+                            <span class="rating__text">(30 نظر)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__from">از </span>
+                                <span class="price__num">1,120  تومان</span>
+                            </p>
+                            <span class="tour-hour"><i class="la la-clock-o mr-1"></i>1 روز</span>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn-box mt-3 text-center">
+                    <button type="button" class="theme-btn"><i class="la la-refresh mr-1"></i>موارد بیشتر</button>
+                    <p class="font-size-13 pt-2">نمایش 1 - 6 از 22 تور</p>
+                </div><!-- end btn-box -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end card-area -->
+<!-- ================================
+    END CARD AREA
+================================= -->
+
+<div class="section-block"></div>
+
+<!-- ================================
+    START INFO AREA
+================================= -->
+<section class="info-area info-bg padding-top-90px padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 responsive-column">
+                <a href="#" class="icon-box icon-layout-2 d-flex">
+                    <div class="info-icon flex-shrink-0 bg-rgb text-color-2">
+                        <i class="la la-phone"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title"> راهنمایی لازم داری؟ با ما تماس بگیر</h4>
+                        <p class="info__desc">
+                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ است.
+                        </p>
+                    </div><!-- end info-content -->
+                </a><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <a href="#" class="icon-box icon-layout-2 d-flex">
+                    <div class="info-icon flex-shrink-0 bg-rgb-2 text-color-3">
+                        <i class="la la-money"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">پرداخت ها</h4>
+                        <p class="info__desc">
+                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ است.
+                        </p>
+                    </div><!-- end info-content -->
+                </a><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <a href="#" class="icon-box icon-layout-2 d-flex">
+                    <div class="info-icon flex-shrink-0 bg-rgb-3 text-color-4">
+                        <i class="la la-times"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">کنسلی تور</h4>
+                        <p class="info__desc">
+                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ است.
+                        </p>
+                    </div><!-- end info-content -->
+                </a><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end info-area -->
+<!-- ================================
+    END INFO AREA
+================================= -->
+
+<!-- ================================
+    START CTA AREA
+================================= -->
+<section class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="cta-content">
+                    <div class="section-heading">
+                        <h2 class="sec__title font-size-30 text-white">از پیشنهاد های شگفت انگیزمون جا نمونی ! <br>
+دریافت تخفیف های شگفتانه فقط از طریق ایمیل .</h2>
+                    </div><!-- end section-heading -->
+                </div>
+            </div><!-- end col-lg-7 -->
+            <div class="col-lg-5">
+                <div class="subscriber-box">
+                    <div class="contact-form-action">
+                        <form action="#">
+                            <div class="input-box">
+                                <label class="label-text text-white">آدرس ایمیلت رو وارد کن</label>
+                                <div class="form-group mb-0">
+                                    <span class="la la-envelope form-icon"></span>
+                                    <input class="form-control" type="email" name="email" placeholder="آدرس ایمیل">
+                                    <button class="theme-btn theme-btn-small submit-btn" type="submit">عضویت</button>
+                                    <span class="font-size-15 pt-1 text-white-50"><i class="la la-lock mr-1"></i>نگران نباش اطلاعاتت پیش ما امنه.</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-5 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end cta-area -->
+<!-- ================================
+    END CTA AREA
+================================= -->
+{% endblock %}

@@ -1,0 +1,144 @@
+{% load static %}
+{% load thumbnail %}
+
+
+<div class="modal-popup">
+    <div class="modal fade" id="loginPopupForm" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <div>
+                        <h5 class="modal-title title" id="exampleModalLongTitle2"> ورود</h5>
+                        <p class="font-size-14">سلام ! به حسابت خوش اومدی</p>
+                    </div>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="la la-close"></span>
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="contact-form-action">
+
+
+                        <form method="post" action="{% url 'login_page' %}" id="login-form">
+                            {{ errors.error_account_active }}
+                            {% csrf_token %}
+
+                            <div class="input-box">
+                                <label class="label-text">ایمیل</label>
+
+                                <div class="form-group">
+                                    <span class="la la-user form-icon"></span>
+
+                                    <input class="form-control" type="text" name="email" placeholder="ایمیلت رو وارد کن">
+                                    <div class="alert-danger" role="alert" id="user-error">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="input-box">
+                                <label class="label-text">رمز عبور</label>
+
+                                <div class="form-group mb-2">
+                                    <span class="la la-lock form-icon"></span>
+
+                                    <input class="form-control" type="text" name="password" placeholder="رمزعبورت رو وارد کن">
+                                    <div class="alert-danger" role="alert" id="password-error">
+
+                                    </div>
+                                </div>
+
+
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="custom-checkbox mb-0">
+                                        <input type="checkbox" id="rememberchb">
+                                        <label for="rememberchb">منو یادت باشه</label>
+                                    </div>
+                                    <p class="forgot-password">
+                                        <a href="{% url 'recovery_password_page' %}">رمزت رو فراموش کردی ؟</a>
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="btn-box pt-3 pb-4">
+                                <button type="submit" class="theme-btn w-100">ورود</button>
+                            </div>
+
+                            <div class="action-box text-center">
+                                <p class="font-size-14">یا با حساب های زیر وارد شو</p>
+                                <ul class="social-profile py-3">
+                                    <li><a href="#" class="bg-5 text-white"><i class="lab la-facebook-f"></i></a></li>
+                                    <li><a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a></li>
+                                    <li><a href="#" class="bg-7 text-white"><i class="lab la-instagram"></i></a></li>
+                                    <li><a href="#" class="bg-5 text-white"><i class="lab la-linkedin-in"></i></a></li>
+                                </ul>
+                            </div>
+
+                        </form>
+
+
+                    </div><!-- end contact-form-action -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+  // وقتی فرم لاگین submit می‌شود
+  $('#login-form').submit(function(event) {
+    event.preventDefault(); // جلوگیری از ارسال فرم به صفحه دیگر
+
+    // دریافت مقادیر ورودی از فرم
+    var email = $('input[name="email"]').val();
+    var password = $('input[name="password"]').val();
+
+    // ارسال درخواست AJAX
+    $.ajax({
+      url: '{% url "login_page" %}',
+      method: 'POST',
+      data: {
+        email: email,
+        password: password,
+        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
+      },
+      success: function(response) {
+        if (response.errors) {
+          // نمایش خطاها
+          if (response.errors.error_account_active) {
+            // نمایش خطای حساب کاربری غیرفعال
+            $('#error-account-active').text(response.errors.error_account_active);
+          }
+          if (response.errors.password_error) {
+            // نمایش خطای رمز عبور
+            $('#password-error').text(response.errors.password_error);
+          }
+          if (response.errors.user_error) {
+            // نمایش خطای نام کاربری
+            $('#user-error').text(response.errors.user_error);
+          }
+        } else {
+          // انتقال به صفحه مورد نظر پس از ورود موفقیت‌آمیز
+          window.location.href = '{% url "main-page" %}';
+        }
+      }
+    });
+  });
+});
+</script>
+

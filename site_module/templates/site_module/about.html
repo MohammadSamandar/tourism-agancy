@@ -1,0 +1,462 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{#{% load poll_extras %}#}
+{% load render_partial %}
+
+
+{% block title %}
+    درباره ما | آسمان گشت
+{% endblock %}
+
+{% block content %}
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area bread-bg-9">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-content">
+                        <div class="section-heading">
+                            <h2 class="sec__title line-height-50 text-white">آسمان گشت همسفر مورد اعتماد
+                                <br>شما در سفرهاتونه .</h2>
+                        </div>
+                    </div><!-- end breadcrumb-content -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+    <div class="bread-svg-box">
+        <svg class="bread-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><polygon points="100 0 50 10 0 0 0 10 100 10"></polygon></svg>
+    </div><!-- end bread-svg -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+
+<!-- ================================
+    START INFO AREA
+================================= -->
+<section class="info-area padding-top-100px padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item ">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/img21.jpg' %}" alt="about-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title mb-2">ما کی هستیم؟</h3>
+                        <p class="card-text">
+                            تیم ما از یه سری جوون فعال ، ماهر و متخصص تشکیل شده که تمام تلاششون رو میکنن تا برای شما یه سفر خاطره انگیز بسازن  .
+                        </p>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item ">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/img22.jpg' %}" alt="about-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title mb-2">چیکار میکنیم؟</h3>
+                        <p class="card-text">
+                            سایت آسمان گشت یه سایت کامللله برای خرید بلیط هواپیما ، رزرو تور ،رزرو خودرو ، رزرو هتل و هرچیزی که برای یه مسافرت عالی و به یاد موندنی لازم دارین .
+                        </p>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item ">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/img23.jpg' %}" alt="about-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title mb-2">وظیفه ما</h3>
+                        <p class="card-text">
+                            وظیفه ما اینه که تمم تلاشمون رو بکنیم تا مشتری هامون تنها دغدغه شون لذت بردن از مسافرتشون باشه !
+                        </p>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end info-area -->
+<!-- ================================
+    END INFO AREA
+================================= -->
+
+<!-- ================================
+    START ABOUT AREA
+================================= -->
+<section class="about-area padding-bottom-90px overflow-hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-heading margin-bottom-40px">
+                    <h2 class="sec__title">درباره ما</h2>
+                    <h4 class="title font-size-16 line-height-26 pt-4 pb-2">از سال 1380، آسمان گشت انقلابی در صنعت سفر ایجاد کرده. متاجستجو برای سفر؟ هیچ کس این کار رو نمی کرد، تا اینکه ما این کار رو کردیم و راهش انداختیم.</h4>
+                    <p class="sec__desc font-size-16 pb-3">یک واقعیت ثابت شده برای مدت طولانی وجود دارد که محتوای قابل خواندن یک صفحه، تمرکز خواننده را از تمرکز بر شکل بیرونی متن یا شکل پاراگراف های قرار داده شده در صفحه ای که می خواند، منحرف می کند. نکته استفاده از لورم ایپسوم این است که توزیع نسبتاً معمولی کاراکترها را دارد، به جای استفاده از "اینجا محتوای متنی وجود دارد، اینجا محتوای متنی وجود دارد"، که آن را شبیه به انگلیسی خواندنی می کند.</p>
+                    <p class="sec__desc font-size-16 pb-3">بسیاری از بسته های انتشارات دسکتاپ و ویرایشگرهای صفحه وب اکنون از لورم ایپسوم به عنوان متن فرم پیش فرض استفاده می کنند و جستجوی "لورم ایپسوم " وب سایت های بسیاری را که هنوز در مراحل اولیه خود هستند نشان می دهد.</p>
+                    <p class="sec__desc font-size-16">چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. </p>
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-6 -->
+            <div class="col-lg-5 ml-auto">
+                <div class="image-box about-img-box">
+                    <img src="{% static 'main_page/images/img24.jpg' %}" alt="about-img" class="img__item img__item-1">
+                    <img src="{% static 'main_page/images/img25.jpg' %}" alt="about-img" class="img__item img__item-2">
+                </div>
+            </div><!-- end col-lg-5 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end about-area -->
+<!-- ================================
+    END ABOUT AREA
+================================= -->
+
+<!-- ================================
+    STAR FUNFACT AREA
+================================= -->
+<section class="funfact-area padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading text-center">
+                    <h2 class="sec__title">لازم نیست حرفی بزنیم رزومه ما همه چیز رو میگه.</h2>
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+        <div class="counter-box counter-box-2 margin-top-60px mb-0">
+            <div class="row">
+                <div class="col-lg-3 responsive-column">
+                    <div class="counter-item counter-item-layout-2 d-flex">
+                        <div class="counter-icon flex-shrink-0">
+                            <i class="la la-users"></i>
+                        </div>
+                        <div class="counter-content">
+                            <div>
+                                <span class="counter" data-from="0" data-to="200"  data-refresh-interval="5">0</span>
+                                <span class="count-symbol">+</span>
+                            </div>
+                            <p class="counter__title">همکاران ما</p>
+                        </div><!-- end counter-content -->
+                    </div><!-- end counter-item -->
+                </div><!-- end col-lg-3 -->
+                <div class="col-lg-3 responsive-column">
+                    <div class="counter-item counter-item-layout-2 d-flex">
+                        <div class="counter-icon flex-shrink-0">
+                            <i class="la la-building"></i>
+                        </div>
+                        <div class="counter-content">
+                            <div>
+                                <span class="counter" data-from="0" data-to="3"  data-refresh-interval="5">0</span>
+                                <span class="count-symbol">هزار</span>
+                            </div>
+                            <p class="counter__title">امکانات و ویژگی ها</p>
+                        </div><!-- end counter-content -->
+                    </div><!-- end counter-item -->
+                </div><!-- end col-lg-3 -->
+                <div class="col-lg-3 responsive-column">
+                    <div class="counter-item counter-item-layout-2 d-flex">
+                        <div class="counter-icon flex-shrink-0">
+                            <i class="la la-globe"></i>
+                        </div>
+                        <div class="counter-content">
+                            <div>
+                                <span class="counter" data-from="0" data-to="400"  data-refresh-interval="5">0</span>
+                                <span class="count-symbol">+</span>
+                            </div>
+                            <p class="counter__title">هتل و مکان توریستی</p>
+                        </div><!-- end counter-content -->
+                    </div><!-- end counter-item -->
+                </div><!-- end col-lg-3 -->
+                <div class="col-lg-3 responsive-column">
+                    <div class="counter-item counter-item-layout-2 d-flex">
+                        <div class="counter-icon flex-shrink-0">
+                            <i class="la la-check-circle"></i>
+                        </div>
+                        <div class="counter-content">
+                            <div>
+                                <span class="counter" data-from="0" data-to="40"  data-refresh-interval="5">0</span>
+                                <span class="count-symbol">هزار</span>
+                            </div>
+                            <p class="counter__title">رزرو آنلاین</p>
+                        </div><!-- end counter-content -->
+                    </div><!-- end counter-item -->
+                </div><!-- end col-lg-3 -->
+            </div><!-- end row -->
+        </div><!-- end counter-box -->
+    </div><!-- end container -->
+</section>
+<!-- ================================
+    END FUNFACT AREA
+================================= -->
+
+<!-- ================================
+       START TESTIMONIAL AREA
+================================= -->
+<section class="testimonial-area section-bg section-padding">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-4">
+                <div class="section-heading">
+                    <h2 class="sec__title line-height-50">از زبان مسافران آسمان گشت</h2>
+                    <p class="sec__desc padding-top-30px">
+                        نظرات مشتریان و مسافرهامون درباره خدمات و سرویس های شرکت آسمان گشت
+                    </p>
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-8">
+                <div class="testimonial-carousel carousel-action">
+                    <div class="testimonial-card">
+                        <div class="testi-desc-box">
+                            <p class="testi__desc">من از عملکرد سایت آسمان گشت خیلی راضی هستم راحت بلیط میخری خدمات پس از فروششون عالیه و کنسلیشون عالیه من بلیط های لاین داخلی و خارجی رو از آسمان گشت خریدم خیلی راضی هستم</p>
+                        </div>
+                        <div class="author-content d-flex align-items-center">
+                            <div class="author-img">
+                                <img src="{% static 'main_page/images/team8.jpg' %}" alt="testimonial image">
+                            </div>
+                            <div class="author-bio">
+                                <h4 class="author__title">رضا امیری</h4>
+                                <span class="author__meta">تهران</span>
+                                <span class="ratings d-flex align-items-center">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end testimonial-card -->
+                    <div class="testimonial-card">
+                        <div class="testi-desc-box">
+                            <p class="testi__desc">معروف ترین و بهترین سایت برای خرید بلیط و تور آسمان گشت هست. هر وقت شهرستان میرم، خیلی راحت خرید میکنم و مشکلی نداشتم. پشتیبانیش هم عالی هست</p>
+                        </div>
+                        <div class="author-content d-flex align-items-center">
+                            <div class="author-img">
+                                <img src="{% static 'main_page/images/team9.jpg' %}" alt="testimonial image">
+                            </div>
+                            <div class="author-bio">
+                                <h4 class="author__title">فرهاد کریمی</h4>
+                                <span class="author__meta">اراک</span>
+                                <span class="ratings d-flex align-items-center">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end testimonial-card -->
+                    <div class="testimonial-card">
+                        <div class="testi-desc-box">
+                            <p class="testi__desc">برای بلیط هواپیما از سایت آسمان گشت خرید کردم که یکی از دوستام معرفی کرده بود.
+                                خیلی راحت و سریع میشه خرید. و قیمتش هم مناسب هست.</p>
+                        </div>
+                        <div class="author-content d-flex align-items-center">
+                            <div class="author-img">
+                                <img src="{% static 'main_page/images/team10.jpg' %}" alt="testimonial image">
+                            </div>
+                            <div class="author-bio">
+                                <h4 class="author__title">امیر شریفی</h4>
+                                <span class="author__meta">گرگان</span>
+                                <span class="ratings d-flex align-items-center">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end testimonial-card -->
+                    <div class="testimonial-card">
+                        <div class="testi-desc-box">
+                            <p class="testi__desc">من همه سفرهام رو از آسمان گشت میگیرم وقتی هم به هر دلیلی سفرم کنسل میشه پولش رو سریع برمیگردونن
+                                من پیشنهاد میدم آسمان گشت رو</p>
+                        </div>
+                        <div class="author-content d-flex align-items-center">
+                            <div class="author-img">
+                                <img src="{% static 'main_page/images/team8.jpg' %}" alt="testimonial image">
+                            </div>
+                            <div class="author-bio">
+                                <h4 class="author__title">طاها خلیلی</h4>
+                                <span class="author__meta">مشهد</span>
+                                <span class="ratings d-flex align-items-center">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end testimonial-card -->
+                </div><!-- end testimonial-carousel -->
+            </div><!-- end col-lg-8 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end testimonial-area -->
+<!-- ================================
+       START TESTIMONIAL AREA
+================================= -->
+
+<!-- ================================
+    START INFO AREA
+================================= -->
+<section class="info-area padding-top-100px padding-bottom-60px text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2 class="sec__title">متخصصان تیم ما</h2>
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+        <div class="row padding-top-100px">
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item team-card">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/team1.jpg' %}" alt="team-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">سعید کریمی</h3>
+                        <p class="card-meta">بنیانگذار و مدیر</p>
+                        <p class="card-text font-size-15 pt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <ul class="social-profile padding-top-20px pb-2">
+                            <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="lab la-twitter"></i></a></li>
+                            <li><a href="#"><i class="lab la-instagram"></i></a></li>
+                            <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item team-card">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/team2.jpg' %}" alt="team-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">هادی مرادی</h3>
+                        <p class="card-meta">مدیر ارشد عملیاتی</p>
+                        <p class="card-text font-size-15 pt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <ul class="social-profile padding-top-20px pb-2">
+                            <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="lab la-twitter"></i></a></li>
+                            <li><a href="#"><i class="lab la-instagram"></i></a></li>
+                            <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item team-card">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/team3.jpg' %}" alt="team-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">بردیا خادمی</h3>
+                        <p class="card-meta">مدیر بخش حسابداری</p>
+                        <p class="card-text font-size-15 pt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <ul class="social-profile padding-top-20px pb-2">
+                            <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="lab la-twitter"></i></a></li>
+                            <li><a href="#"><i class="lab la-instagram"></i></a></li>
+                            <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+             <div class="col-lg-4 responsive-column">
+                <div class="card-item team-card">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/team4.jpg' %}" alt="team-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">دانیال حیدری</h3>
+                        <p class="card-meta">پشتیبانی فروش</p>
+                        <p class="card-text font-size-15 pt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <ul class="social-profile padding-top-20px pb-2">
+                            <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="lab la-twitter"></i></a></li>
+                            <li><a href="#"><i class="lab la-instagram"></i></a></li>
+                            <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item team-card">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/team5.jpg' %}" alt="team-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">کیوان نظری</h3>
+                        <p class="card-meta">مدیر بخش سفارشات</p>
+                        <p class="card-text font-size-15 pt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <ul class="social-profile padding-top-20px pb-2">
+                            <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="lab la-twitter"></i></a></li>
+                            <li><a href="#"><i class="lab la-instagram"></i></a></li>
+                            <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item team-card">
+                    <div class="card-img">
+                        <img src="{% static 'main_page/images/team6.jpg' %}" alt="team-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">ایمان کیانی</h3>
+                        <p class="card-meta">مدیر بخش طراحی</p>
+                        <p class="card-text font-size-15 pt-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <ul class="social-profile padding-top-20px pb-2">
+                            <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="lab la-twitter"></i></a></li>
+                            <li><a href="#"><i class="lab la-instagram"></i></a></li>
+                            <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end info-area -->
+<!-- ================================
+    END INFO AREA
+================================= -->
+
+<!-- ================================
+    START CTA AREA
+================================= -->
+<section class="cta-area cta-bg-2 bg-fixed section-padding text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2 class="sec__title mb-3 text-white">همکاری در  <br> آسمان گشت </h2>
+                    <p class="sec__desc text-white">ما همیشه دنبال افراد با استعداد و کسایی که تشنه انجام کارهای بزرگن هستیم ! <br> پس اگه فکر میکنی این ویژگی ها رو داری جات پیش ما خالیه :)
+                        
+                    </p>
+                </div><!-- end section-heading -->
+                <div class="btn-box padding-top-35px">
+                    <a href="#" class="theme-btn border-0">به تیم ما ملحق شو</a>
+                </div>
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end cta-area -->
+<!-- ================================
+    END CTA AREA
+================================= -->
+
+
+
+{% endblock %}

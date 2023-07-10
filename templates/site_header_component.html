@@ -1,0 +1,79 @@
+{% load static %}
+{% load thumbnail %}
+
+<header class="header-area">
+    <div class="header-menu-wrapper padding-right-100px padding-left-100px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="menu-wrapper justify-content-between">
+                        <a href="#" class="down-button"><i class="la la-angle-down"></i></a>
+                        <div class="logo">
+                            <a href=""><img src="{% static 'main_page/images/logo-as2.png' %}" alt="logo"></a>
+                            <div class="menu-toggler">
+                                <i class="la la-bars"></i>
+                                <i class="la la-times"></i>
+                            </div><!-- end menu-toggler -->
+                        </div><!-- end logo -->
+
+                        <div class="main-menu-content pr-0 ml-0">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'main-page' %}"> صفحه اصلی </a>
+
+                                    </li>
+                                    <li>
+                                        <a href="#">تور<i class="la la-angle-down"></i></a>
+                                        <ul class="dropdown-menu-item">
+                                            <li><a href="{% url 'tour-list' %}">لیست تورها</a></li>
+                                            <li><a href="{% url 'tour-booking' %}">رزور تور</a></li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">بلاگ</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="{% url 'contact_us_page' %}">تماس با ما </a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="{% url 'about-page' %}">درباره ما </a>
+
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div><!-- end main-menu-content -->
+
+                        {% if request.user.is_superuser %}
+                            <div class="nav-btn">
+                                <a href="../admin/" class="theme-btn theme-btn-small theme-btn-transparent mr-1">پنل کاربری ادمین</a>
+                            </div>
+
+                            {% elif request.user.is_authenticated %}
+                                <div class="nav-btn">
+                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent mr-1">پنل کاربری</a>
+                                    <a href="{% url 'logout_page' %}" class="theme-btn theme-btn-small">خروج</a>
+                                </div>
+
+                            {% else %}
+                                <div class="nav-btn">
+                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent mr-1" data-toggle="modal" data-target="#signupPopupForm">ثبت نام</a>
+                                    <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm"> ورود</a>
+                                </div>
+                        {% endif %}
+
+
+
+                        <!-- end nav-btn -->
+                    </div><!-- end menu-wrapper -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container-fluid -->
+    </div><!-- end header-menu-wrapper -->
+</header>

@@ -1,0 +1,81 @@
+{% extends 'business_owner_panel/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{#{% load poll_extras %}#}
+{% load render_partial %}
+
+
+{% block title %}
+    جزییات پرداخت ها
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container">
+
+        <h1>جزییات پرداخت </h1>
+
+        <br><br>
+
+        <div id="order-detail-content">
+{#            {% if order.orderdetail_set.all %}#}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>شناسه</th>
+                        <th>محصول</th>
+                        <th>قیمت نهایی خرید</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in order.orderdetail_set.all %}
+                        <tr>
+                            <td>{{ item.id}}</td>
+                            <td>{{ item.product.title }}</td>
+                            <td>{{ item.final_price }} تومان</td>
+
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+
+
+{#            {% else %}#}
+{#            <div class="row">#}
+{#            <div class="col-md-12">#}
+{#                <div class="alert alert-warning">#}
+{#                    <p>سبد خرید شما خالی می باشد</p>#}
+{##}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#            </div>#}
+{#            {% endif %}#}
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block footer_reference %}
+    {% include 'business_owner_panel/components_references/footer_references.html' %}
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+</script>
+{% endblock %}
