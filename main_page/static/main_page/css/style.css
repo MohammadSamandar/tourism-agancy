@@ -69,6 +69,12 @@
     font-display: swap;
 }
 
+
+@font-face {
+    font-family: 'IRMaryam';
+    src: url('../fonts/IRMaryam.ttf');
+}
+
 @keyframes rotate {
     100% {
         transform: rotate(360deg)
@@ -3504,7 +3510,7 @@ body {
 
 .breadcrumb-area {
     padding-top        : 90px;
-    padding-bottom     : 100px;
+    padding-bottom     : 410px;
     position           : relative;
     z-index            : 1;
     background-size    : cover;
@@ -3577,7 +3583,7 @@ body {
 }
 
 .bread-bg-9 {
-    background-image: url(../images/bread-bg8.jpg)
+    background-image: url(../images/About.jpg)
 }
 
 .bread-bg-10 {
@@ -11704,4 +11710,17 @@ body {
         justify-content: center !important;
         text-align     : center !important
     }
+}
+
+
+
+
+
+
+
+#sec_title{
+    font-family: IRMaryam;
+    font-size  : 40px;
+    color      : #181818;
+    font-weight: 700
 }
