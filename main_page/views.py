@@ -1,10 +1,26 @@
 from django.shortcuts import render
 
+from manage_tours.models import Tour
+
+
 # Create your views here.
 
 def main_page(request):
+    tours = Tour.objects.filter(status=True).order_by('price')[0:5]
 
-    return render(request, 'main_page/index7.html')
+    context = {
+        'tours': tours,
+    }
+
+    return render(request, 'main_page/index7.html', context)
+
+
+
+
+
+
+
+
 
 
 

@@ -189,137 +189,36 @@
         </div><!-- end row -->
         <div class="row padding-top-50px">
             <div class="col-lg-12">
+
                 <div class="trending-carousel carousel-action">
+                    {% for tour in tours %}
+
                     <div class="card-item trending-card mb-0">
                         <div class="card-img">
-                            <a href="tour-details.html" class="d-block">
-                                <img src="{% static 'main_page/images/img9.jpg' %}" alt="Destination-img">
+                            <a href="{% url 'tour-detail' slug=tour.slug %}" class="d-block">
+                                <img src="{{ tour.main_image.url }}" alt="Destination-img">
                             </a>
-                            <span class="badge">پرفروش</span>
+{#                            <span class="badge">پرفروش</span>#}
                         </div>
                         <div class="card-body">
-                            <h3 class="card-title mb-0"><a href="tour-details.html">تور زمستانه در پیست امپایر استیت</a></h3>
+                            <h3 class="card-title mb-0"><a href="{% url 'tour-detail' slug=tour.slug %}">{{ tour.title }}</a></h3>
+                            <p class="card-meta">{{ tour.description }}</p>
                             <div class="card-rating">
-                                <span class="badge text-white">4.4/5</span>
-                                <span class="rating__text">30 نظر</span>
+{#                                <span class="badge text-white">{{ tour.rating }}</span>#}
+{#                                <span class="rating__text">30 نظر</span>#}
                             </div>
                             <div class="card-price d-flex align-items-center justify-content-between">
-                                <span><i class="la la-clock mr-1"></i>5 روز</span>
+                                <span><i class="la la-clock mr-1"></i>{{ tour.duration }}</span>
                                 <p>
-                                    <span class="price__from">از</span>
-                                    <span class="price__num">1,120  تومان</span>
+                                    <span class="price__from">قیمت</span>
+                                    <span class="price__num">{{ tour.price }}</span>
                                 </p>
                             </div>
                         </div>
                     </div><!-- end card-item -->
-                    <div class="card-item trending-card mb-0">
-                        <div class="card-img">
-                            <a href="tour-details.html" class="d-block">
-                                <img src="{% static 'main_page/images/img10.jpg' %}" alt="Destination-img">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title mb-0"><a href="tour-details.html">تور کلبه های ساحلی</a></h3>
-                            <div class="card-rating">
-                                <span class="badge text-white">4.4/5</span>
-                                <span class="rating__text">30 نظر</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <span><i class="la la-clock mr-1"></i>7 ساعت</span>
-                                <p>
-                                    <span class="price__from">از</span>
-                                    <span class="price__num">1,000  تومان</span>
-                                    <span class="price__num before-price color-text-3">1,120  تومان</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div><!-- end card-item -->
-                    <div class="card-item trending-card mb-0">
-                        <div class="card-img">
-                            <a href="tour-details.html" class="d-block">
-                                <img src="{% static 'main_page/images/img11.jpg' %}" alt="Destination-img">
-                            </a>
-                            <span class="badge">ویژه</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title mb-0"><a href="tour-details.html">تور دریایی پل گلدن گیت</a></h3>
-                            <div class="card-rating">
-                                <span class="badge text-white">4.4/5</span>
-                                <span class="rating__text">30 نظر</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <span><i class="la la-clock mr-1"></i>6 روز</span>
-                                <p>
-                                    <span class="price__from">از</span>
-                                    <span class="price__num">1,120  تومان</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div><!-- end card-item -->
-                    <div class="card-item trending-card mb-0">
-                        <div class="card-img">
-                            <a href="tour-details.html" class="d-block">
-                                <img src="{% static 'main_page/images/img12.jpg' %}" alt="Destination-img">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title mb-0"><a href="tour-details.html">2 ساعت اسب سواری با مربی</a></h3>
-                            <div class="card-rating">
-                                <span class="badge text-white">4.4/5</span>
-                                <span class="rating__text">30 نظر</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <span><i class="la la-clock mr-1"></i>10 روز</span>
-                                <p>
-                                    <span class="price__from">از</span>
-                                    <span class="price__num">224,000 تومان</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div><!-- end card-item -->
-                    <div class="card-item trending-card mb-0">
-                        <div class="card-img">
-                            <a href="tour-details.html" class="d-block">
-                                <img src="{% static 'main_page/images/img13.jpg' %}" alt="Destination-img">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title mb-0"><a href="tour-details.html">غواصی در ساحل بویتون</a></h3>
-                            <div class="card-rating">
-                                <span class="badge text-white">4.4/5</span>
-                                <span class="rating__text">30 نظر</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <span><i class="la la-clock mr-1"></i>2-4 ساعت </span>
-                                <p>
-                                    <span class="price__from">از</span>
-                                    <span class="price__num">1,120  تومان</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div><!-- end card-item -->
-                    <div class="card-item trending-card mb-0">
-                        <div class="card-img">
-                            <a href="tour-details.html" class="d-block">
-                                <img src="{% static 'main_page/images/img14.jpg' %}" alt="Destination-img">
-                            </a>
-                            <span class="badge">ویژه</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title mb-0"><a href="tour-details.html">تور بوم گردی کایاک تونل </a></h3>
-                            <div class="card-rating">
-                                <span class="badge text-white">4.4/5</span>
-                                <span class="rating__text">30 نظر</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <span><i class="la la-clock mr-1"></i>10 روز</span>
-                                <p>
-                                    <span class="price__from">از</span>
-                                    <span class="price__num">224,000 تومان</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div><!-- end card-item -->
+
+                    {% endfor %}
+
                 </div><!-- end car-carousel -->
             </div><!-- end col-lg-12 -->
         </div><!-- end row -->
@@ -376,14 +275,14 @@
                 <div class="testimonial-carousel carousel-action">
                     <div class="testimonial-card">
                         <div class="testi-desc-box">
-                            <p class="testi__desc">من از عملکرد  Trizen خیلی راضی هستم راحت بلیط میخری خدمات پس از فروششون عالیه و کنسلیشون عالیه من بلیط های لاین داخلی و خارجی رو از Trizen خریدم </p>
+                            <p class="testi__desc">معروف ترین و بهترین سایت برای خرید تور آسمان گشت هست. هر وقت شهرستان میرم، خیلی راحت خرید میکنم و مشکلی نداشتم. پشتیبانیش هم عالی هست</p>
                         </div>
                         <div class="author-content d-flex align-items-center">
                             <div class="author-img">
-                                <img src="{% static 'main_page/images/team8.jpg' %}" alt="testimonial image">
+                                <img src="{% static 'main_page/images/team9.jpg' %}" alt="testimonial image">
                             </div>
                             <div class="author-bio">
-                                <h4 class="author__title">رضا امیری</h4>
+                                <h4 class="author__title">الهام یوسفی</h4>
                                 <span class="author__meta">تهران</span>
                                 <span class="ratings d-flex align-items-center">
                                     <i class="la la-star"></i>
@@ -397,28 +296,7 @@
                     </div><!-- end testimonial-card -->
                     <div class="testimonial-card">
                         <div class="testi-desc-box">
-                            <p class="testi__desc">معروف ترین و بهترین سایت برای خرید بلیط و تور Trizen هست. هر وقت شهرستان میرم، خیلی راحت خرید میکنم و مشکلی نداشتم. پشتیبانیش هم عالی هست</p>
-                        </div>
-                        <div class="author-content d-flex align-items-center">
-                            <div class="author-img">
-                                <img src="{% static 'main_page/images/team9.jpg' %}" alt="testimonial image">
-                            </div>
-                            <div class="author-bio">
-                                <h4 class="author__title">فرهاد کریمی</h4>
-                                <span class="author__meta">اراک</span>
-                                <span class="ratings d-flex align-items-center">
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div><!-- end testimonial-card -->
-                    <div class="testimonial-card">
-                        <div class="testi-desc-box">
-                            <p class="testi__desc">برای بلیط هواپیما از سایت Trizen خرید کردم که یکی از دوستام معرفی کرده بود.
+                            <p class="testi__desc">برای تور روسیه از سایت آسمان گشت خرید کردم که یکی از دوستام معرفی کرده بود.
                                 خیلی راحت و سریع میشه خرید. و قیمتش هم مناسب هست.</p>
                         </div>
                         <div class="author-content d-flex align-items-center">
@@ -426,8 +304,8 @@
                                 <img src="{% static 'main_page/images/team10.jpg' %}" alt="testimonial image">
                             </div>
                             <div class="author-bio">
-                                <h4 class="author__title">امیر شریفی</h4>
-                                <span class="author__meta">گرگان</span>
+                                <h4 class="author__title">اکبر دانشور</h4>
+                                <span class="author__meta">آذربایجان</span>
                                 <span class="ratings d-flex align-items-center">
                                     <i class="la la-star"></i>
                                     <i class="la la-star"></i>
@@ -440,16 +318,16 @@
                     </div><!-- end testimonial-card -->
                     <div class="testimonial-card">
                         <div class="testi-desc-box">
-                            <p class="testi__desc">من همه سفرهام رو از Trizen میگیرم وقتی هم به هر دلیلی سفرم کنسل میشه پولش رو سریع برمیگردونن
-                                من پیشنهاد میدم Trizen رو</p>
+                            <p class="testi__desc">من همه سفرهام رو از آسمان گشت میگیرم وقتی هم به هر دلیلی سفرم کنسل میشه پولش رو سریع برمیگردونن
+                                من پیشنهاد میدم آسمان گشا رو</p>
                         </div>
                         <div class="author-content d-flex align-items-center">
                             <div class="author-img">
                                 <img src="{% static 'main_page/images/team8.jpg' %}" alt="testimonial image">
                             </div>
                             <div class="author-bio">
-                                <h4 class="author__title">طاها خلیلی</h4>
-                                <span class="author__meta">مشهد</span>
+                                <h4 class="author__title">پرویز حسینی</h4>
+                                <span class="author__meta">تهران</span>
                                 <span class="ratings d-flex align-items-center">
                                     <i class="la la-star"></i>
                                     <i class="la la-star"></i>
@@ -471,193 +349,204 @@
 
 <div class="section-block"></div>
 
+
+
+
+
+
 <!-- ================================
        START TOP ACTIVITY AREA
 ================================= -->
-<section class="top-activity-area section--padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading text-left">
-                    <h2 class="sec__title curve-shape padding-bottom-30px" data-text="curvs">بهترین فعالیت ها</h2>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-12 -->
-        </div><!-- end row -->
-        <div class="row padding-top-50px">
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img1.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">جاذبه های فرهنگی</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img1.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img2.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">جاذبه های تاریخی</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img2.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img3.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">حیات وحش</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img3.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img4.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">جاذبه های طبیعی</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img4.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img5.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">جاذبه های فرهنگی و هنری</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img5.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img6.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">بازدید از موزه</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img6.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img7.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">سرگرمی ویژه کودکان</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img7.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-            <div class="col-lg-3 responsive-column">
-                <div class="flip-box">
-                    <div class="flip-box-front">
-                        <img src="{% static 'main_page/images/img8.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">
-                            <h3 class="flip-title">تفریح های فضای باز</h3>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-front -->
-                    <div class="flip-box-back">
-                        <img src="{% static 'main_page/images/img8.jpg' %}" alt="" class="flip-img">
-                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">
-                            <div>
-                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">
-                                    <i class="la la-arrow-left"></i>
-                                </div>
-                                <h3 class="flip-title">مشاهده فعالیت</h3>
-                            </div>
-                        </a><!-- end flip-content -->
-                    </div><!-- end flip-box-back -->
-                </div><!-- end flip-box -->
-            </div><!-- end col-lg-3 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section><!-- end top-activity-area -->
+{#<section class="top-activity-area section--padding">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-lg-12">#}
+{#                <div class="section-heading text-left">#}
+{#                    <h2 class="sec__title curve-shape padding-bottom-30px" data-text="curvs">بهترین فعالیت ها</h2>#}
+{#                </div><!-- end section-heading -->#}
+{#            </div><!-- end col-lg-12 -->#}
+{#        </div><!-- end row -->#}
+{#        <div class="row padding-top-50px">#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img1.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">جاذبه های فرهنگی</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img1.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img2.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">جاذبه های تاریخی</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img2.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img3.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">حیات وحش</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img3.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img4.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">جاذبه های طبیعی</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img4.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img5.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">جاذبه های فرهنگی و هنری</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img5.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img6.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">بازدید از موزه</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img6.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img7.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">سرگرمی ویژه کودکان</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img7.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#            <div class="col-lg-3 responsive-column">#}
+{#                <div class="flip-box">#}
+{#                    <div class="flip-box-front">#}
+{#                        <img src="{% static 'main_page/images/img8.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-end justify-content-start">#}
+{#                            <h3 class="flip-title">تفریح های فضای باز</h3>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-front -->#}
+{#                    <div class="flip-box-back">#}
+{#                        <img src="{% static 'main_page/images/img8.jpg' %}" alt="" class="flip-img">#}
+{#                        <a href="#" class="flip-content d-flex align-items-center justify-content-center">#}
+{#                            <div>#}
+{#                                <div class="icon-element mx-auto mb-3 bg-white text-color-2">#}
+{#                                    <i class="la la-arrow-left"></i>#}
+{#                                </div>#}
+{#                                <h3 class="flip-title">مشاهده فعالیت</h3>#}
+{#                            </div>#}
+{#                        </a><!-- end flip-content -->#}
+{#                    </div><!-- end flip-box-back -->#}
+{#                </div><!-- end flip-box -->#}
+{#            </div><!-- end col-lg-3 -->#}
+{#        </div><!-- end row -->#}
+{#    </div><!-- end container -->#}
+{#</section><!-- end top-activity-area -->#}
 <!-- ================================
        START TOP ACTIVITY AREA
 ================================= -->
+
+
+
+
+
+
 
 <!-- ================================
     START CTA AREA
@@ -671,7 +560,7 @@
 {#                    <p class="sec__desc text-white pt-3">تخفیف تا سقف 50% برای تورهای تفریحی و شهری </p>#}
                 </div><!-- end section-heading -->
                 <div class="btn-box padding-top-35px">
-                    <a href="#" class="theme-btn border-0">مشاهده کنید <i class="la la-arrow-right ml-1"></i></a>
+                    <a href="{% url 'tour-list' %}" class="theme-btn border-0">مشاهده کنید <i class="la la-arrow-right ml-1"></i></a>
                 </div>
             </div><!-- end col-lg-12 -->
         </div><!-- end row -->
@@ -681,188 +570,194 @@
     END CTA AREA
 ================================= -->
 
+
+
+
 <!-- ================================
        START BLOG AREA
 ================================= -->
-<section class="blog-area section--padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading text-left">
-                    <h2 class="sec__title curve-shape padding-bottom-30px" data-text="curvs">مقالات اخیر</h2>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-12 -->
-        </div><!-- end row -->
-        <div class="row padding-top-50px">
-            <div class="col-lg-4 responsive-column">
-                <div class="card-item blog-card">
-                    <div class="card-img">
-                        <img src="{% static 'main_page/images/img5.jpg' %}" alt="blog-img">
-                        <div class="post-format icon-element">
-                            <i class="la la-photo"></i>
-                        </div>
-                        <div class="card-body">
-                            <div class="post-categories">
-                                <a href="#" class="badge">سفر</a>
-                                <a href="#" class="badge">سبک زندگی</a>
-                            </div>
-                            <h3 class="card-title line-height-26"><a href="blog-single.html">بهترین هتل های اسکاندیناوی - خاص ترین ها رو بشناس</a></h3>
-                            <p class="card-meta">
-                                <span class="post__date"> 1 بهمن 1400</span>
-                                <span class="post-dot"></span>
-                                <span class="post__time">5 دقیقه برای خوندن</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <div class="author-content d-flex align-items-center">
-                            <div class="author-img">
-                                <img src="{% static 'main_page/images/small-team1.jpg' %}" alt="testimonial image">
-                            </div>
-                            <div class="author-bio">
-                                <a href="#" class="author__title">رضا امیری</a>
-                            </div>
-                        </div>
-                        <div class="post-share">
-                            <ul>
-                                <li>
-                                    <i class="la la-share icon-element"></i>
-                                    <ul class="post-share-dropdown d-flex align-items-center">
-                                        <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="lab la-twitter"></i></a></li>
-                                        <li><a href="#"><i class="lab la-instagram"></i></a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- end card-item -->
-            </div><!-- end col-lg-4 -->
-            <div class="col-lg-4 responsive-column">
-                <div class="card-item blog-card">
-                    <div class="card-img">
-                        <img src="{% static 'main_page/images/img6.jpg' %}" alt="blog-img">
-                        <div class="post-format icon-element">
-                            <i class="la la-play"></i>
-                        </div>
-                        <div class="card-body">
-                            <div class="post-categories">
-                                <a href="#" class="badge">ویدئو</a>
-                            </div>
-                            <h3 class="card-title line-height-26"><a href="blog-single.html">شگفت انگیزتین هتل ها برای اقامت در نروژ</a></h3>
-                            <p class="card-meta">
-                                <span class="post__date"> 1 دی 1400</span>
-                                <span class="post-dot"></span>
-                                <span class="post__time">4 دقیقه برای خوندن</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <div class="author-content d-flex align-items-center">
-                            <div class="author-img">
-                                <img src="{% static 'main_page/images/small-team2.jpg' %}" alt="testimonial image">
-                            </div>
-                            <div class="author-bio">
-                                <a href="#" class="author__title">فرهاد حسنی</a>
-                            </div>
-                        </div>
-                        <div class="post-share">
-                            <ul>
-                                <li>
-                                    <i class="la la-share icon-element"></i>
-                                    <ul class="post-share-dropdown d-flex align-items-center">
-                                        <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="lab la-twitter"></i></a></li>
-                                        <li><a href="#"><i class="lab la-instagram"></i></a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- end card-item -->
-            </div><!-- end col-lg-4 -->
-            <div class="col-lg-4 responsive-column">
-                <div class="card-item blog-card">
-                    <div class="card-img">
-                        <img src="{% static 'main_page/images/img7.jpg' %}" alt="blog-img">
-                        <div class="post-format icon-element">
-                            <i class="la la-music"></i>
-                        </div>
-                        <div class="card-body">
-                            <div class="post-categories">
-                                <a href="#" class="badge">صوتی</a>
-                            </div>
-                            <h3 class="card-title line-height-26"><a href="blog-single.html">توی سفر کاریت مثل خونه احساس راحتی کن !</a></h3>
-                            <p class="card-meta">
-                                <span class="post__date"> 1 دی 1400</span>
-                                <span class="post-dot"></span>
-                                <span class="post__time">3 دقیقه برای خوندن</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <div class="author-content d-flex align-items-center">
-                            <div class="author-img">
-                                <img src="{% static 'main_page/images/small-team3.jpg' %}" alt="testimonial image">
-                            </div>
-                            <div class="author-bio">
-                                <a href="#" class="author__title">امیر شریفی</a>
-                            </div>
-                        </div>
-                        <div class="post-share">
-                            <ul>
-                                <li>
-                                    <i class="la la-share icon-element"></i>
-                                    <ul class="post-share-dropdown d-flex align-items-center">
-                                        <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="lab la-twitter"></i></a></li>
-                                        <li><a href="#"><i class="lab la-instagram"></i></a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- end card-item -->
-            </div><!-- end col-lg-4 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section><!-- end blog-area -->
+{#<section class="blog-area section--padding">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-lg-12">#}
+{#                <div class="section-heading text-left">#}
+{#                    <h2 class="sec__title curve-shape padding-bottom-30px" data-text="curvs">مقالات اخیر</h2>#}
+{#                </div><!-- end section-heading -->#}
+{#            </div><!-- end col-lg-12 -->#}
+{#        </div><!-- end row -->#}
+{#        <div class="row padding-top-50px">#}
+{#            <div class="col-lg-4 responsive-column">#}
+{#                <div class="card-item blog-card">#}
+{#                    <div class="card-img">#}
+{#                        <img src="{% static 'main_page/images/img5.jpg' %}" alt="blog-img">#}
+{#                        <div class="post-format icon-element">#}
+{#                            <i class="la la-photo"></i>#}
+{#                        </div>#}
+{#                        <div class="card-body">#}
+{#                            <div class="post-categories">#}
+{#                                <a href="#" class="badge">سفر</a>#}
+{#                                <a href="#" class="badge">سبک زندگی</a>#}
+{#                            </div>#}
+{#                            <h3 class="card-title line-height-26"><a href="blog-single.html">بهترین هتل های اسکاندیناوی - خاص ترین ها رو بشناس</a></h3>#}
+{#                            <p class="card-meta">#}
+{#                                <span class="post__date"> 1 بهمن 1400</span>#}
+{#                                <span class="post-dot"></span>#}
+{#                                <span class="post__time">5 دقیقه برای خوندن</span>#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="card-footer d-flex align-items-center justify-content-between">#}
+{#                        <div class="author-content d-flex align-items-center">#}
+{#                            <div class="author-img">#}
+{#                                <img src="{% static 'main_page/images/small-team1.jpg' %}" alt="testimonial image">#}
+{#                            </div>#}
+{#                            <div class="author-bio">#}
+{#                                <a href="#" class="author__title">رضا امیری</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="post-share">#}
+{#                            <ul>#}
+{#                                <li>#}
+{#                                    <i class="la la-share icon-element"></i>#}
+{#                                    <ul class="post-share-dropdown d-flex align-items-center">#}
+{#                                        <li><a href="#"><i class="lab la-facebook-f"></i></a></li>#}
+{#                                        <li><a href="#"><i class="lab la-twitter"></i></a></li>#}
+{#                                        <li><a href="#"><i class="lab la-instagram"></i></a></li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div><!-- end card-item -->#}
+{#            </div><!-- end col-lg-4 -->#}
+{#            <div class="col-lg-4 responsive-column">#}
+{#                <div class="card-item blog-card">#}
+{#                    <div class="card-img">#}
+{#                        <img src="{% static 'main_page/images/img6.jpg' %}" alt="blog-img">#}
+{#                        <div class="post-format icon-element">#}
+{#                            <i class="la la-play"></i>#}
+{#                        </div>#}
+{#                        <div class="card-body">#}
+{#                            <div class="post-categories">#}
+{#                                <a href="#" class="badge">ویدئو</a>#}
+{#                            </div>#}
+{#                            <h3 class="card-title line-height-26"><a href="blog-single.html">شگفت انگیزتین هتل ها برای اقامت در نروژ</a></h3>#}
+{#                            <p class="card-meta">#}
+{#                                <span class="post__date"> 1 دی 1400</span>#}
+{#                                <span class="post-dot"></span>#}
+{#                                <span class="post__time">4 دقیقه برای خوندن</span>#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="card-footer d-flex align-items-center justify-content-between">#}
+{#                        <div class="author-content d-flex align-items-center">#}
+{#                            <div class="author-img">#}
+{#                                <img src="{% static 'main_page/images/small-team2.jpg' %}" alt="testimonial image">#}
+{#                            </div>#}
+{#                            <div class="author-bio">#}
+{#                                <a href="#" class="author__title">فرهاد حسنی</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="post-share">#}
+{#                            <ul>#}
+{#                                <li>#}
+{#                                    <i class="la la-share icon-element"></i>#}
+{#                                    <ul class="post-share-dropdown d-flex align-items-center">#}
+{#                                        <li><a href="#"><i class="lab la-facebook-f"></i></a></li>#}
+{#                                        <li><a href="#"><i class="lab la-twitter"></i></a></li>#}
+{#                                        <li><a href="#"><i class="lab la-instagram"></i></a></li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div><!-- end card-item -->#}
+{#            </div><!-- end col-lg-4 -->#}
+{#            <div class="col-lg-4 responsive-column">#}
+{#                <div class="card-item blog-card">#}
+{#                    <div class="card-img">#}
+{#                        <img src="{% static 'main_page/images/img7.jpg' %}" alt="blog-img">#}
+{#                        <div class="post-format icon-element">#}
+{#                            <i class="la la-music"></i>#}
+{#                        </div>#}
+{#                        <div class="card-body">#}
+{#                            <div class="post-categories">#}
+{#                                <a href="#" class="badge">صوتی</a>#}
+{#                            </div>#}
+{#                            <h3 class="card-title line-height-26"><a href="blog-single.html">توی سفر کاریت مثل خونه احساس راحتی کن !</a></h3>#}
+{#                            <p class="card-meta">#}
+{#                                <span class="post__date"> 1 دی 1400</span>#}
+{#                                <span class="post-dot"></span>#}
+{#                                <span class="post__time">3 دقیقه برای خوندن</span>#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="card-footer d-flex align-items-center justify-content-between">#}
+{#                        <div class="author-content d-flex align-items-center">#}
+{#                            <div class="author-img">#}
+{#                                <img src="{% static 'main_page/images/small-team3.jpg' %}" alt="testimonial image">#}
+{#                            </div>#}
+{#                            <div class="author-bio">#}
+{#                                <a href="#" class="author__title">امیر شریفی</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="post-share">#}
+{#                            <ul>#}
+{#                                <li>#}
+{#                                    <i class="la la-share icon-element"></i>#}
+{#                                    <ul class="post-share-dropdown d-flex align-items-center">#}
+{#                                        <li><a href="#"><i class="lab la-facebook-f"></i></a></li>#}
+{#                                        <li><a href="#"><i class="lab la-twitter"></i></a></li>#}
+{#                                        <li><a href="#"><i class="lab la-instagram"></i></a></li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div><!-- end card-item -->#}
+{#            </div><!-- end col-lg-4 -->#}
+{#        </div><!-- end row -->#}
+{#    </div><!-- end container -->#}
+{#</section><!-- end blog-area -->#}
 <!-- ================================
        START BLOG AREA
 ================================= -->
 
+
+
+
 <!-- ================================
     START CTA AREA
 ================================= -->
-<section class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="section-heading text-left">
-                    <p class="sec__desc text-white-50 pb-1">ثبت نام در خبرنامه</p>
-                        <h2 class="sec__title font-size-30 text-white">برای دریافت پیشنهادات ویژه عضو بشو</h2>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-7 -->
-            <div class="col-lg-5">
-                <div class="subscriber-box">
-                    <div class="contact-form-action">
-                        <form action="#">
-                            <div class="input-box">
-                                <label class="label-text text-white">ایمیلت رو وارد کن</label>
-                                <div class="form-group mb-0">
-                                    <span class="la la-envelope form-icon"></span>
-                                    <input class="form-control" type="email" name="email" placeholder="آدرس ایمیل">
-                                    <button class="theme-btn theme-btn-small submit-btn" type="submit">عضویت</button>
-                                    <span class="font-size-14 pt-1 text-white-50"><i class="la la-lock mr-1"></i>نگران نباش اطلاعاتت پیش ما امنه.</span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-5 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section><!-- end cta-area -->
+{#<section class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px">#}
+{#    <div class="container">#}
+{#        <div class="row align-items-center">#}
+{#            <div class="col-lg-7">#}
+{#                <div class="section-heading text-left">#}
+{#                    <p class="sec__desc text-white-50 pb-1">ثبت نام در خبرنامه</p>#}
+{#                        <h2 class="sec__title font-size-30 text-white">برای دریافت پیشنهادات ویژه عضو بشو</h2>#}
+{#                </div><!-- end section-heading -->#}
+{#            </div><!-- end col-lg-7 -->#}
+{#            <div class="col-lg-5">#}
+{#                <div class="subscriber-box">#}
+{#                    <div class="contact-form-action">#}
+{#                        <form action="#">#}
+{#                            <div class="input-box">#}
+{#                                <label class="label-text text-white">ایمیلت رو وارد کن</label>#}
+{#                                <div class="form-group mb-0">#}
+{#                                    <span class="la la-envelope form-icon"></span>#}
+{#                                    <input class="form-control" type="email" name="email" placeholder="آدرس ایمیل">#}
+{#                                    <button class="theme-btn theme-btn-small submit-btn" type="submit">عضویت</button>#}
+{#                                    <span class="font-size-14 pt-1 text-white-50"><i class="la la-lock mr-1"></i>نگران نباش اطلاعاتت پیش ما امنه.</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                    </div>#}
+{#                </div><!-- end section-heading -->#}
+{#            </div><!-- end col-lg-5 -->#}
+{#        </div><!-- end row -->#}
+{#    </div><!-- end container -->#}
+{#</section><!-- end cta-area -->#}
 <!-- ================================
     END CTA AREA
 ================================= -->
