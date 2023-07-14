@@ -27,5 +27,6 @@ urlpatterns = [
     path('', include('manage_tours.urls')),
     path('contact-us/', include('contact_us.urls')),
     path('', include('order_module.urls')),
+    path('tinymce/', include('tinymce.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
