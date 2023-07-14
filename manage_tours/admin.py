@@ -9,27 +9,27 @@ from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, T
 
 
 # Register your models here.
-class TourFlightInline(StackedInlineJalaliMixin, admin.TabularInline):
+class TourFlightInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = models.Flight
     extra = 2
 
-class TourImageGalleryInline(admin.StackedInline):
-    model = models.TourImageGallery
-    extra = 5
+# class TourImageGalleryInline(admin.StackedInline):
+#     model = models.TourImageGallery
+#     extra = 5
 
 
-class TourItineraryInline(admin.StackedInline):
-    model = models.Itinerary
-    extra = 2
+# class TourItineraryInline(admin.StackedInline):
+#     model = models.Itinerary
+#     extra = 3
 
-class TourIFAQInline(admin.StackedInline):
-    model = models.FAQ
-    extra = 2
+# class TourIFAQInline(admin.StackedInline):
+#     model = models.FAQ
+#     extra = 5
 
 class TourAdmin( ModelAdminJalaliMixin, admin.ModelAdmin):
     list_display = ['title', 'main_image', 'status', 'price']
     list_filter = ['price', 'status']
-    inlines = [TourImageGalleryInline, TourItineraryInline, TourIFAQInline, TourFlightInline]
+    inlines = [TourFlightInline]
 
     @admin.display(description='تاریخ رفت', ordering='departure_date')
     def get_departure_date_jalali(self, obj):
@@ -47,6 +47,7 @@ admin.site.register(models.Accommodation)
 admin.site.register(models.RefundPolicyForFlight)
 admin.site.register(models.Flight)
 admin.site.register(models.Itinerary)
+admin.site.register(models.ItineraryDetail)
 admin.site.register(models.FAQ)
 admin.site.register(models.Tour, TourAdmin)
 admin.site.register(models.TourImageGallery)

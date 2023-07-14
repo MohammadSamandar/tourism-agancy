@@ -41,7 +41,8 @@ class Accommodation(models.Model):
 
     # فیلدهای مشترک بین تمام اقامتگاه‌ها
     name = models.CharField(max_length=250, verbose_name='نام اقامتگاه', null=True , blank=True)
-    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=250, verbose_name='شهر', null=True , blank=True)
+    address = models.CharField(max_length=200, verbose_name='آدرس')
     features = models.ManyToManyField('Feature', blank=True)
     number_of_rooms = models.IntegerField(verbose_name='تعداد اتاق', null=True, blank=True)
 
@@ -59,13 +60,60 @@ class Accommodation(models.Model):
         verbose_name = 'اقامتگاه'
         verbose_name_plural = 'اقامتگاه ها'
 
+class TourImageGallery(models.Model):
+    title = models.CharField(max_length=100, verbose_name='عنوان تصویر')
+    image = models.ImageField(upload_to='images/tour-image', verbose_name='تصویر')
+
+
+    def __str__(self):
+        return f"گالری تصاویر {self.title}"
+
+
+    class Meta:
+        verbose_name = 'تصویر'
+        verbose_name_plural = 'تصاویر'
 
 
 
+class ItineraryDetail(models.Model):
+    place = models.CharField(max_length=100, verbose_name='نام مکان')
+    day = models.IntegerField(verbose_name='روز چندم')
+    short_description = HTMLField(verbose_name='توضیحات کوتاه')
+
+    def __str__(self):
+        return f"جزییات {self.place}"
 
 
+    class Meta:
+        verbose_name = 'جزییات برنامه سفر'
+        verbose_name_plural = 'جزییات برنامه های سفر'
 
 
+class Itinerary(models.Model):
+    title = models.CharField(max_length=100, verbose_name='عنوان', null=True, blank=True)
+    detail = models.ManyToManyField(ItineraryDetail, verbose_name='جزییات')
+
+
+    def __str__(self):
+        return f"برنامه سفر {self.title}"
+
+
+    class Meta:
+        verbose_name = 'برنامه سفر'
+        verbose_name_plural = 'برنامه های سفر'
+
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=100, verbose_name='سوال')
+    answer = models.TextField(max_length=450, verbose_name='جواب')
+
+    def __str__(self):
+        return self.question
+
+
+    class Meta:
+        verbose_name = 'سوالات متداول'
+        verbose_name_plural = 'سوالات متداول'
 
 
 
@@ -86,7 +134,10 @@ class Tour(models.Model):
     departure_date = models.DateTimeField(verbose_name='تاریخ رفت')
     return_date = models.DateTimeField(verbose_name='تاریخ برگشت')
 
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, verbose_name='اطلاعات اقامتگاه')
+    accommodation = models.ManyToManyField(Accommodation, verbose_name='اطلاعات اقامتگاه')
+    itinerary = models.ManyToManyField(Itinerary, verbose_name='برنامه سفر', null=True, blank=True)
+    faq = models.ManyToManyField(FAQ, verbose_name='سوالات متداول', null=True, blank=True)
+    image_gallery = models.ManyToManyField(TourImageGallery, verbose_name='گالری تصویر')
     # flight = models.OneToOneField(Flight, on_delete=models.CASCADE, verbose_name='اطلاعات پرواز')
 
     rating = models.IntegerField(verbose_name='امتیاز')
@@ -98,54 +149,16 @@ class Tour(models.Model):
 
 
     def __str__(self):
-        return f"Tour {self.accommodation.name}"
+        return f"Tour {self.title}"
 
     class Meta:
         verbose_name = 'تور'
         verbose_name_plural = 'تور ها'
 
-class TourImageGallery(models.Model):
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور')
-    title = models.CharField(max_length=100, verbose_name='عنوان تصویر')
-    image = models.ImageField(upload_to='images/tour-image', verbose_name='تصویر')
 
 
-    def __str__(self):
-        return f"گالری تصاویر {self.title}"
 
 
-    class Meta:
-        verbose_name = 'تصویر'
-        verbose_name_plural = 'تصاویر'
-
-
-class Itinerary(models.Model):
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور', null=True, blank=True)
-    place = models.CharField(max_length=100, verbose_name='نام مکان')
-    day = models.IntegerField(verbose_name='روز چندم')
-    short_description = models.TextField(max_length=450, verbose_name='توضیحات کوتاه')
-
-    def __str__(self):
-        return f"برنامه سفر {self.place}"
-
-
-    class Meta:
-        verbose_name = 'برنامه سفر'
-        verbose_name_plural = 'برنامه های سفر'
-
-
-class FAQ(models.Model):
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور', null=True, blank=True)
-    question = models.CharField(max_length=100, verbose_name='سوال')
-    answer = models.TextField(max_length=450, verbose_name='جواب')
-
-    def __str__(self):
-        return self.question
-
-
-    class Meta:
-        verbose_name = 'سوالات متداول'
-        verbose_name_plural = 'سوالات متداول'
 
 
 
@@ -164,7 +177,7 @@ class Flight(models.Model):
     airport_of_origin = models.CharField(max_length=100, verbose_name='فرودگاه مبدا')
     destination_airport = models.CharField(max_length=100, verbose_name='فرودگاه مقصد')
 
-    luggage_count = models.PositiveIntegerField(verbose_name='تعداد چمدان')
+    luggage_count = models.PositiveIntegerField(verbose_name='تعداد چمدان', null=True, blank=True)
     luggage_weight = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='بار چمدان')
 
 
@@ -175,9 +188,9 @@ class Flight(models.Model):
     arrival_time = models.TimeField(verbose_name='ساعت رسیدن')
 
     airline = models.CharField(max_length=100, verbose_name='شرکت هواپیمایی')
-    cabin_type = models.CharField(max_length=50, verbose_name='نوع کابین')
-    fare_class = models.CharField(max_length=50, verbose_name='کلاس نرخی')
-    refund_policy = models.OneToOneField('RefundPolicyForFlight', on_delete=models.CASCADE, verbose_name='قوانین استرداد پرواز')
+    cabin_type = models.CharField(max_length=50, verbose_name='نوع کابین', blank=True, null=True)
+    fare_class = models.CharField(max_length=50, verbose_name='کلاس نرخی' , null=True, blank=True)
+    refund_policy = models.OneToOneField('RefundPolicyForFlight', on_delete=models.CASCADE, verbose_name='قوانین استرداد پرواز', blank=True, null=True, )
 
 
 

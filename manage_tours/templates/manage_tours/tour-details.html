@@ -1,15 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load thumbnail %}
-{#{% load poll_extras %}#}
+{% load poll_extras %}
 {% load render_partial %}
 
 
 {% block title %}
-   جزییات  تور
+   {{ tour.title }}
 {% endblock %}
 
 {% block content %}
+    <style>
+    :root {
+        --breadcrumb-background-image: url('{{ tour.main_image.url }}');
+    }
+
+    .breadcrumb-area {
+        background-image: var(--breadcrumb-background-image);
+    }
+</style>
 
 
 <!-- ================================
@@ -69,7 +78,8 @@
             </div><!-- end row -->
         </div><!-- end container -->
     </div><!-- end breadcrumb-wrap -->
-</section><!-- end breadcrumb-area -->
+</section>
+    <!-- end breadcrumb-area -->
 <!-- ================================
     END BREADCRUMB AREA
 ================================= -->
@@ -111,8 +121,8 @@
                                 <div class="d-flex flex-wrap align-items-center pt-2">
                                     <p class="mr-2">فروشنده: {{ tour.seller }}</p>
                                     <p>
-                                        <span class="badge badge-warning text-white font-size-16">{{ tour.rating }}</span>
-                                        <span>(4209 نظر)</span>
+{#                                        <span class="badge badge-warning text-white font-size-16">{{ tour.rating }}</span>#}
+{#                                        <span>(4209 نظر)</span>#}
                                     </p>
                                 </div>
                             </div><!-- end single-content-item -->
@@ -136,8 +146,8 @@
                                                 <i class="la la-calendar"></i>
                                             </div>
                                             <div class="single-feature-titles">
-                                                <h3 class="title font-size-15 font-weight-medium">تاريخ</h3>
-                                                <span class="font-size-13">رفت: {{ tour.departure_date }} - برگشت: {{ tour.return_date }} </span>
+                                                <h3 class="title font-size-15 font-weight-medium">تاریخ</h3>
+                                                <span class="font-size-13">  {{ tour.departure_date | show_jalali_date }} &nbsp; &nbsp; | &nbsp; &nbsp; {{ tour.return_date | show_jalali_date }}  </span>
                                             </div>
                                         </div><!-- end single-tour-feature -->
                                     </div><!-- end col-lg-4 -->
@@ -148,7 +158,12 @@
                                             </div>
                                             <div class="single-feature-titles">
                                                 <h3 class="title font-size-15 font-weight-medium">حرکت از</h3>
-                                                <span class="font-size-13">فرودگاه {{ tour.flight.airport_of_origin }}</span>
+                                                {% for flight in tour.flight_set.all %}
+                                                  {% if flight.flight_type == 'one_way' %}
+
+                                                <span class="font-size-13">فرودگاه {{ flight.airport_of_origin }}</span>
+                                                  {% endif %}
+                                              {% endfor %}
                                             </div>
                                         </div><!-- end single-tour-feature -->
                                     </div><!-- end col-lg-4 -->
@@ -157,7 +172,7 @@
                             <div class="section-block"></div>
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
                                 <h3 class="title font-size-20">توضیحات</h3>
-                                <p class="py-3">{{ tour.description }}</p>
+                                <p class="py-3">{{ tour.description | safe  }}</p>
 
                             </div><!-- end single-content-item -->
                             <div class="section-block"></div>
@@ -170,25 +185,27 @@
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
                                 <h3 class="title font-size-20">برنامه سفر</h3>
                                 <div class="accordion accordion-item padding-top-30px" id="accordionExample">
-                                {% for itinerary in tour.itinerary_set.all %}
+                                {% for detail in itinerary_details %}
+
 
                                     <div class="card">
-                                        <div class="card-header" id="faqHeading{{ itinerary.day }}">
+                                        <div class="card-header" id="faqHeading{{ detail.day }}">
                                             <h2 class="mb-0">
-                                                <button class="btn btn-link d-flex align-items-center justify-content-between font-size-16" type="button" data-toggle="collapse" data-target="#faqCollapse{{ itinerary.day }}" aria-expanded="false" aria-controls="faqCollapse{{ itinerary.day }}">
-                                                    <span>روز {{ itinerary.day }} - {{ itinerary.place }} </span>
+                                                <button class="btn btn-link d-flex align-items-center justify-content-between font-size-16" type="button" data-toggle="collapse" data-target="#faqCollapse{{ detail.day }}" aria-expanded="false" aria-controls="faqCollapse{{ detail.day }}">
+                                                    <span>روز {{ detail.day }} - {{ detail.place }} </span>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="faqCollapse{{ itinerary.day }}" class="collapse" aria-labelledby="faqHeading{{ itinerary.day }}" data-parent="#accordionExample">
+                                        <div id="faqCollapse{{ detail.day }}" class="collapse" aria-labelledby="faqHeading{{ detail.day }}" data-parent="#accordionExample">
                                             <div class="card-body d-flex align-items-center">
                                                 <div class="flex-shrink-0 mt-2 mr-4">
                                                     <img src="{% static 'main_page/images/small-img.jpg' %}" alt="destination-img">
                                                 </div>
-                                                <p>{{ itinerary.short_description }}</p>
+                                                <p>{{ detail.short_description | safe }}</p>
                                             </div>
                                         </div>
                                     </div><!-- end card -->
+
                                 {% endfor %}
 
                             </div>
@@ -203,7 +220,7 @@
                                 <h3 class="title font-size-20">تصاویر</h3>
 
                                 <div class="gallery-carousel carousel-action padding-top-30px">
-                                    {% for imggallery in tour.tourimagegallery_set.all %}
+                                    {% for imggallery in tour.image_gallery.all %}
                                     <div class="card-item mb-0">
                                         <div class="card-img">
                                             <img src="{{ imggallery.image.url }}" alt="Destination-img">
@@ -222,7 +239,7 @@
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
                                 <h3 class="title font-size-20">سوالات متداول</h3>
                                 <div class="accordion accordion-item padding-top-30px" id="accordionExample2">
-                                    {% for faq in tour.faq_set.all %}
+                                    {% for faq in tour.faq.all %}
                                     <div class="card">
                                         <div class="card-header" id="faqHeading{{ faq.id }}">
                                             <h2 class="mb-0">
@@ -261,346 +278,360 @@
                         </div><!-- end location-map -->
 
 
-                        <div id="reviews" class="page-scroll">
-                            <div class="single-content-item padding-top-40px padding-bottom-40px">
-                                <h3 class="title font-size-20">نظرات</h3>
-                                <div class="review-container padding-top-30px">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-4">
-                                            <div class="review-summary">
-                                                <h2>4.5<span>/5</span></h2>
-                                                <p>عالی</p>
-                                                <span>بر اساس 4 نظر</span>
-                                            </div>
-                                        </div><!-- end col-lg-4 -->
-                                        <div class="col-lg-8">
-                                            <div class="review-bars">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="progress-item">
-                                                            <h3 class="progressbar-title">خدمات</h3>
-                                                            <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">
-                                                                <div class="progressbar-box flex-shrink-0">
-                                                                    <div class="progressbar-line" data-percent="70%">
-                                                                        <div class="progressbar-line-item bar-bg-1"></div>
-                                                                    </div> <!-- End Skill Bar -->
-                                                                </div>
-                                                                <div class="bar-percent">4.6</div>
-                                                            </div>
-                                                        </div><!-- end progress-item -->
-                                                    </div><!-- end col-lg-6 -->
-                                                     <div class="col-lg-6">
-                                                         <div class="progress-item">
-                                                             <h3 class="progressbar-title">مکان </h3>
-                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">
-                                                                 <div class="progressbar-box flex-shrink-0">
-                                                                     <div class="progressbar-line" data-percent="55%">
-                                                                         <div class="progressbar-line-item bar-bg-2"></div>
-                                                                     </div> <!-- End Skill Bar -->
-                                                                 </div>
-                                                                 <div class="bar-percent">4.7</div>
-                                                             </div>
-                                                         </div><!-- end progress-item -->
-                                                    </div><!-- end col-lg-6 -->
-                                                     <div class="col-lg-6">
-                                                         <div class="progress-item">
-                                                             <h3 class="progressbar-title">سرویس دوره ای</h3>
-                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">
-                                                                 <div class="progressbar-box flex-shrink-0">
-                                                                     <div class="progressbar-line" data-percent="40%">
-                                                                         <div class="progressbar-line-item bar-bg-3"></div>
-                                                                     </div> <!-- End Skill Bar -->
-                                                                 </div>
-                                                                 <div class="bar-percent">2.6</div>
-                                                             </div>
-                                                         </div><!-- end progress-item -->
-                                                    </div><!-- end col-lg-6 -->
-                                                     <div class="col-lg-6">
-                                                         <div class="progress-item">
-                                                             <h3 class="progressbar-title">پاکیزگی</h3>
-                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">
-                                                                 <div class="progressbar-box flex-shrink-0">
-                                                                     <div class="progressbar-line" data-percent="60%">
-                                                                         <div class="progressbar-line-item bar-bg-4"></div>
-                                                                     </div> <!-- End Skill Bar -->
-                                                                 </div>
-                                                                 <div class="bar-percent">3.6</div>
-                                                             </div>
-                                                         </div><!-- end progress-item -->
-                                                    </div><!-- end col-lg-6 -->
-                                                     <div class="col-lg-6">
-                                                         <div class="progress-item">
-                                                             <h3 class="progressbar-title">امکانات رفاهی</h3>
-                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">
-                                                                 <div class="progressbar-box flex-shrink-0">
-                                                                     <div class="progressbar-line" data-percent="50%">
-                                                                         <div class="progressbar-line-item bar-bg-5"></div>
-                                                                     </div> <!-- End Skill Bar -->
-                                                                 </div>
-                                                                 <div class="bar-percent">2.6</div>
-                                                             </div>
-                                                         </div><!-- end progress-item -->
-                                                    </div><!-- end col-lg-6 -->
-                                                </div><!-- end row -->
-                                            </div>
-                                        </div><!-- end col-lg-8 -->
-                                    </div>
-                                </div>
-                            </div><!-- end single-content-item -->
-                            <div class="section-block"></div>
-                        </div><!-- end reviews -->
+{#                        <div id="reviews" class="page-scroll">#}
+{#                            <div class="single-content-item padding-top-40px padding-bottom-40px">#}
+{#                                <h3 class="title font-size-20">نظرات</h3>#}
+{#                                <div class="review-container padding-top-30px">#}
+{#                                    <div class="row align-items-center">#}
+{#                                        <div class="col-lg-4">#}
+{#                                            <div class="review-summary">#}
+{#                                                <h2>4.5<span>/5</span></h2>#}
+{#                                                <p>عالی</p>#}
+{#                                                <span>بر اساس 4 نظر</span>#}
+{#                                            </div>#}
+{#                                        </div><!-- end col-lg-4 -->#}
+{#                                        <div class="col-lg-8">#}
+{#                                            <div class="review-bars">#}
+{#                                                <div class="row">#}
+{#                                                    <div class="col-lg-6">#}
+{#                                                        <div class="progress-item">#}
+{#                                                            <h3 class="progressbar-title">خدمات</h3>#}
+{#                                                            <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">#}
+{#                                                                <div class="progressbar-box flex-shrink-0">#}
+{#                                                                    <div class="progressbar-line" data-percent="70%">#}
+{#                                                                        <div class="progressbar-line-item bar-bg-1"></div>#}
+{#                                                                    </div> <!-- End Skill Bar -->#}
+{#                                                                </div>#}
+{#                                                                <div class="bar-percent">4.6</div>#}
+{#                                                            </div>#}
+{#                                                        </div><!-- end progress-item -->#}
+{#                                                    </div><!-- end col-lg-6 -->#}
+{#                                                     <div class="col-lg-6">#}
+{#                                                         <div class="progress-item">#}
+{#                                                             <h3 class="progressbar-title">مکان </h3>#}
+{#                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">#}
+{#                                                                 <div class="progressbar-box flex-shrink-0">#}
+{#                                                                     <div class="progressbar-line" data-percent="55%">#}
+{#                                                                         <div class="progressbar-line-item bar-bg-2"></div>#}
+{#                                                                     </div> <!-- End Skill Bar -->#}
+{#                                                                 </div>#}
+{#                                                                 <div class="bar-percent">4.7</div>#}
+{#                                                             </div>#}
+{#                                                         </div><!-- end progress-item -->#}
+{#                                                    </div><!-- end col-lg-6 -->#}
+{#                                                     <div class="col-lg-6">#}
+{#                                                         <div class="progress-item">#}
+{#                                                             <h3 class="progressbar-title">سرویس دوره ای</h3>#}
+{#                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">#}
+{#                                                                 <div class="progressbar-box flex-shrink-0">#}
+{#                                                                     <div class="progressbar-line" data-percent="40%">#}
+{#                                                                         <div class="progressbar-line-item bar-bg-3"></div>#}
+{#                                                                     </div> <!-- End Skill Bar -->#}
+{#                                                                 </div>#}
+{#                                                                 <div class="bar-percent">2.6</div>#}
+{#                                                             </div>#}
+{#                                                         </div><!-- end progress-item -->#}
+{#                                                    </div><!-- end col-lg-6 -->#}
+{#                                                     <div class="col-lg-6">#}
+{#                                                         <div class="progress-item">#}
+{#                                                             <h3 class="progressbar-title">پاکیزگی</h3>#}
+{#                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">#}
+{#                                                                 <div class="progressbar-box flex-shrink-0">#}
+{#                                                                     <div class="progressbar-line" data-percent="60%">#}
+{#                                                                         <div class="progressbar-line-item bar-bg-4"></div>#}
+{#                                                                     </div> <!-- End Skill Bar -->#}
+{#                                                                 </div>#}
+{#                                                                 <div class="bar-percent">3.6</div>#}
+{#                                                             </div>#}
+{#                                                         </div><!-- end progress-item -->#}
+{#                                                    </div><!-- end col-lg-6 -->#}
+{#                                                     <div class="col-lg-6">#}
+{#                                                         <div class="progress-item">#}
+{#                                                             <h3 class="progressbar-title">امکانات رفاهی</h3>#}
+{#                                                             <div class="progressbar-content line-height-20 d-flex align-items-center justify-content-between">#}
+{#                                                                 <div class="progressbar-box flex-shrink-0">#}
+{#                                                                     <div class="progressbar-line" data-percent="50%">#}
+{#                                                                         <div class="progressbar-line-item bar-bg-5"></div>#}
+{#                                                                     </div> <!-- End Skill Bar -->#}
+{#                                                                 </div>#}
+{#                                                                 <div class="bar-percent">2.6</div>#}
+{#                                                             </div>#}
+{#                                                         </div><!-- end progress-item -->#}
+{#                                                    </div><!-- end col-lg-6 -->#}
+{#                                                </div><!-- end row -->#}
+{#                                            </div>#}
+{#                                        </div><!-- end col-lg-8 -->#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div><!-- end single-content-item -->#}
+{#                            <div class="section-block"></div>#}
+{#                        </div>#}
+                        <!-- end reviews -->
 
 
-                        <div class="review-box">
-                            <div class="single-content-item padding-top-40px">
-                                <h3 class="title font-size-20">نمایش 3 نظر</h3>
-                                <div class="comments-list padding-top-50px">
-                                    <div class="comment">
-                                        <div class="comment-avatar">
-                                            <img class="avatar__img" alt="" src="{% static 'main_page/images/team8.jpg' %}">
-                                        </div>
-                                        <div class="comment-body">
-                                            <div class="meta-data">
-                                                <h3 class="comment__author">رضا امیری</h3>
-                                                <div class="meta-data-inner d-flex">
-                                                    <span class="ratings d-flex align-items-center mr-1">
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                    </span>
-                                                    <p class="comment__date">5 آبان 1400</p>
-                                                </div>
-                                            </div>
-                                            <p class="comment-content">
-                                                .سفر چین از بهترین مسافرتهاس.من خیلی جاها رو دیدم ولی به نظر من چین با همش فرق داره.واقعا فرهنگ متفاوت.غذای متفاوت .قیافه متفاوت .خرید متفاوت..... و اونجا میبینین که خیلی جالبه.پکن یه شهر بزرگ با کلی دیدنی.توی این سفر وقت سر خاروندن ندارین.من با Trizen رفتم. لیدر بسیاااااااارررررررررر عالی و با تجربه ای داره که اکثرن اونجا هست 
-                                            </p>
-                                            <div class="comment-reply d-flex align-items-center justify-content-between">
-                                                <a class="theme-btn" href="#" data-toggle="modal" data-target="#replayPopupForm">
-                                                    <span class="la la-mail-reply mr-1"></span>پاسخ
-                                                </a>
-                                                <div class="reviews-reaction">
-                                                    <a href="#" class="comment-like"><i class="la la-thumbs-up"></i> 13</a>
-                                                    <a href="#" class="comment-dislike"><i class="la la-thumbs-down"></i> 2</a>
-                                                    <a href="#" class="comment-love"><i class="la la-heart-o"></i> 5</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- end comments -->
-                                    <div class="comment comment-reply-item">
-                                        <div class="comment-avatar">
-                                            <img class="avatar__img" alt="" src="{% static 'main_page/images/team9.jpg' %}">
-                                        </div>
-                                        <div class="comment-body">
-                                            <div class="meta-data">
-                                                <h3 class="comment__author">علی کیانی</h3>
-                                                <div class="meta-data-inner d-flex">
-                                                    <span class="ratings d-flex align-items-center mr-1">
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                    </span>
-                                                    <p class="comment__date">5 آبان 1400</p>
-                                                </div>
-                                            </div>
-                                            <p class="comment-content">
-                                                سفر بسیار جالبی بود ، تجربه های زیادی توی این تور به تور به دست آوردم و شگفتی های زیادی رو دیدم ،همه چی عالی بود 
-                                            </p>
-                                            <div class="comment-reply d-flex align-items-center justify-content-between">
-                                                <a class="theme-btn" href="#" data-toggle="modal" data-target="#replayPopupForm">
-                                                    <span class="la la-mail-reply mr-1"></span>پاسخ
-                                                </a>
-                                                <div class="reviews-reaction">
-                                                    <a href="#" class="comment-like"><i class="la la-thumbs-up"></i> 13</a>
-                                                    <a href="#" class="comment-dislike"><i class="la la-thumbs-down"></i> 2</a>
-                                                    <a href="#" class="comment-love"><i class="la la-heart-o"></i> 5</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- end comments -->
-                                    <div class="comment">
-                                        <div class="comment-avatar">
-                                            <img class="avatar__img" alt="" src="{% static 'main_page/images/team10.jpg' %}">
-                                        </div>
-                                        <div class="comment-body">
-                                            <div class="meta-data">
-                                                <h3 class="comment__author">محسن میرزایی</h3>
-                                                <div class="meta-data-inner d-flex">
-                                                    <span class="ratings d-flex align-items-center mr-1">
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                    </span>
-                                                    <p class="comment__date">5 آبان 1400</p>
-                                                </div>
-                                            </div>
-                                            <p class="comment-content">
-                                                تور فوق العاد ه عالی بود بود ، خیلی خوشحالم که این سفر رو انتخاب کردم .تور لیدر سفر هم خیلی معدب و کاربلد بودند واقعا توی این وقت کنی که داشتیم جاذب های زیادی رو دیدیم و از سفر لذت بردیم .
-                                            </p>
-                                            <div class="comment-reply d-flex align-items-center justify-content-between">
-                                                <a class="theme-btn" href="#" data-toggle="modal" data-target="#replayPopupForm">
-                                                    <span class="la la-mail-reply mr-1"></span>پاسخ
-                                                </a>
-                                                <div class="reviews-reaction">
-                                                    <a href="#" class="comment-like"><i class="la la-thumbs-up"></i> 13</a>
-                                                    <a href="#" class="comment-dislike"><i class="la la-thumbs-down"></i> 2</a>
-                                                    <a href="#" class="comment-love"><i class="la la-heart-o"></i> 5</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- end comments -->
-                                    <div class="btn-box load-more text-center">
-                                        <button class="theme-btn theme-btn-small theme-btn-transparent" type="button">نظرات بیشتر</button>
-                                    </div>
-                                </div><!-- end comments-list -->
-                                <div class="comment-forum padding-top-40px">
-                                    <div class="form-box">
-                                        <div class="form-title-wrap">
-                                            <h3 class="title">نظری بنویس</h3>
-                                        </div><!-- form-title-wrap -->
-                                        <div class="form-content">
-                                            <div class="rate-option p-2">
-                                                <div class="row">
-                                                    <div class="col-lg-4 responsive-column">
-                                                        <div class="rate-option-item">
-                                                            <label>خدمات</label>
-                                                            <div class="rate-stars-option">
-                                                                <input type="checkbox" id="lst1" value="1">
-                                                                <label for="lst1"></label>
-                                                                <input type="checkbox" id="lst2" value="2">
-                                                                <label for="lst2"></label>
-                                                                <input type="checkbox" id="lst3" value="3">
-                                                                <label for="lst3"></label>
-                                                                <input type="checkbox" id="lst4" value="4">
-                                                                <label for="lst4"></label>
-                                                                <input type="checkbox" id="lst5" value="5">
-                                                                <label for="lst5"></label>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- col-lg-4 -->
-                                                    <div class="col-lg-4 responsive-column">
-                                                        <div class="rate-option-item">
-                                                            <label>مکان </label>
-                                                            <div class="rate-stars-option">
-                                                                <input type="checkbox" id="l1" value="1">
-                                                                <label for="l1"></label>
-                                                                <input type="checkbox" id="l2" value="2">
-                                                                <label for="l2"></label>
-                                                                <input type="checkbox" id="l3" value="3">
-                                                                <label for="l3"></label>
-                                                                <input type="checkbox" id="l4" value="4">
-                                                                <label for="l4"></label>
-                                                                <input type="checkbox" id="l5" value="5">
-                                                                <label for="l5"></label>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- col-lg-4 -->
-                                                    <div class="col-lg-4 responsive-column">
-                                                        <div class="rate-option-item">
-                                                            <label>سرویس دوره ای</label>
-                                                            <div class="rate-stars-option">
-                                                                <input type="checkbox" id="vm1" value="1">
-                                                                <label for="vm1"></label>
-                                                                <input type="checkbox" id="vm2" value="2">
-                                                                <label for="vm2"></label>
-                                                                <input type="checkbox" id="vm3" value="3">
-                                                                <label for="vm3"></label>
-                                                                <input type="checkbox" id="vm4" value="4">
-                                                                <label for="vm4"></label>
-                                                                <input type="checkbox" id="vm5" value="5">
-                                                                <label for="vm5"></label>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- col-lg-4 -->
-                                                    <div class="col-lg-4 responsive-column">
-                                                        <div class="rate-option-item">
-                                                            <label>پاکیزگی</label>
-                                                            <div class="rate-stars-option">
-                                                                <input type="checkbox" id="cln1" value="1">
-                                                                <label for="cln1"></label>
-                                                                <input type="checkbox" id="cln2" value="2">
-                                                                <label for="cln2"></label>
-                                                                <input type="checkbox" id="cln3" value="3">
-                                                                <label for="cln3"></label>
-                                                                <input type="checkbox" id="cln4" value="4">
-                                                                <label for="cln4"></label>
-                                                                <input type="checkbox" id="cln5" value="5">
-                                                                <label for="cln5"></label>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- col-lg-4 -->
-                                                    <div class="col-lg-4 responsive-column">
-                                                        <div class="rate-option-item">
-                                                            <label>امکانات رفاهی</label>
-                                                            <div class="rate-stars-option">
-                                                                <input type="checkbox" id="f1" value="1">
-                                                                <label for="f1"></label>
-                                                                <input type="checkbox" id="f2" value="2">
-                                                                <label for="f2"></label>
-                                                                <input type="checkbox" id="f3" value="3">
-                                                                <label for="f3"></label>
-                                                                <input type="checkbox" id="f4" value="4">
-                                                                <label for="f4"></label>
-                                                                <input type="checkbox" id="f5" value="5">
-                                                                <label for="f5"></label>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- col-lg-4 -->
-                                                </div><!-- end row -->
-                                            </div><!-- end rate-option -->
-                                            <div class="contact-form-action">
-                                                <form method="post">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 responsive-column">
-                                                            <div class="input-box">
-                                                                <label class="label-text">نام</label>
-                                                                <div class="form-group">
-                                                                    <span class="la la-user form-icon"></span>
-                                                                    <input class="form-control" type="text" name="text" placeholder="نام شما">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                         <div class="col-lg-6 responsive-column">
-                                                             <div class="input-box">
-                                                                 <label class="label-text">ایمیل</label>
-                                                                 <div class="form-group">
-                                                                     <span class="la la-envelope-o form-icon"></span>
-                                                                     <input class="form-control" type="email" name="email" placeholder="آدرس ایمیل">
-                                                                 </div>
-                                                             </div>
-                                                        </div>
-                                                         <div class="col-lg-12">
-                                                             <div class="input-box">
-                                                                 <label class="label-text">پیام</label>
-                                                                 <div class="form-group">
-                                                                     <span class="la la-pencil form-icon"></span>
-                                                                     <textarea class="message-control form-control" name="message" placeholder="پیامی بنویس"></textarea>
-                                                                 </div>
-                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="btn-box">
-                                                                <button type="button" class="theme-btn">ارسال نظر</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div><!-- end contact-form-action -->
-                                        </div><!-- end form-content -->
-                                    </div><!-- end form-box -->
-                                </div><!-- end comment-forum -->
-                            </div><!-- end single-content-item -->
-                        </div><!-- end review-box -->
+
+
+
+
+
+
+{#                        <div class="review-box">#}
+{#                            <div class="single-content-item padding-top-40px">#}
+{#                                <h3 class="title font-size-20">نمایش 3 نظر</h3>#}
+{#                                <div class="comments-list padding-top-50px">#}
+{#                                    <div class="comment">#}
+{#                                        <div class="comment-avatar">#}
+{#                                            <img class="avatar__img" alt="" src="{% static 'main_page/images/team8.jpg' %}">#}
+{#                                        </div>#}
+{#                                        <div class="comment-body">#}
+{#                                            <div class="meta-data">#}
+{#                                                <h3 class="comment__author">رضا امیری</h3>#}
+{#                                                <div class="meta-data-inner d-flex">#}
+{#                                                    <span class="ratings d-flex align-items-center mr-1">#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                    </span>#}
+{#                                                    <p class="comment__date">5 آبان 1400</p>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <p class="comment-content">#}
+{#                                                .سفر چین از بهترین مسافرتهاس.من خیلی جاها رو دیدم ولی به نظر من چین با همش فرق داره.واقعا فرهنگ متفاوت.غذای متفاوت .قیافه متفاوت .خرید متفاوت..... و اونجا میبینین که خیلی جالبه.پکن یه شهر بزرگ با کلی دیدنی.توی این سفر وقت سر خاروندن ندارین.من با Trizen رفتم. لیدر بسیاااااااارررررررررر عالی و با تجربه ای داره که اکثرن اونجا هست #}
+{#                                            </p>#}
+{#                                            <div class="comment-reply d-flex align-items-center justify-content-between">#}
+{#                                                <a class="theme-btn" href="#" data-toggle="modal" data-target="#replayPopupForm">#}
+{#                                                    <span class="la la-mail-reply mr-1"></span>پاسخ#}
+{#                                                </a>#}
+{#                                                <div class="reviews-reaction">#}
+{#                                                    <a href="#" class="comment-like"><i class="la la-thumbs-up"></i> 13</a>#}
+{#                                                    <a href="#" class="comment-dislike"><i class="la la-thumbs-down"></i> 2</a>#}
+{#                                                    <a href="#" class="comment-love"><i class="la la-heart-o"></i> 5</a>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div><!-- end comments -->#}
+{#                                    <div class="comment comment-reply-item">#}
+{#                                        <div class="comment-avatar">#}
+{#                                            <img class="avatar__img" alt="" src="{% static 'main_page/images/team9.jpg' %}">#}
+{#                                        </div>#}
+{#                                        <div class="comment-body">#}
+{#                                            <div class="meta-data">#}
+{#                                                <h3 class="comment__author">علی کیانی</h3>#}
+{#                                                <div class="meta-data-inner d-flex">#}
+{#                                                    <span class="ratings d-flex align-items-center mr-1">#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                    </span>#}
+{#                                                    <p class="comment__date">5 آبان 1400</p>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <p class="comment-content">#}
+{#                                                سفر بسیار جالبی بود ، تجربه های زیادی توی این تور به تور به دست آوردم و شگفتی های زیادی رو دیدم ،همه چی عالی بود #}
+{#                                            </p>#}
+{#                                            <div class="comment-reply d-flex align-items-center justify-content-between">#}
+{#                                                <a class="theme-btn" href="#" data-toggle="modal" data-target="#replayPopupForm">#}
+{#                                                    <span class="la la-mail-reply mr-1"></span>پاسخ#}
+{#                                                </a>#}
+{#                                                <div class="reviews-reaction">#}
+{#                                                    <a href="#" class="comment-like"><i class="la la-thumbs-up"></i> 13</a>#}
+{#                                                    <a href="#" class="comment-dislike"><i class="la la-thumbs-down"></i> 2</a>#}
+{#                                                    <a href="#" class="comment-love"><i class="la la-heart-o"></i> 5</a>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div><!-- end comments -->#}
+{#                                    <div class="comment">#}
+{#                                        <div class="comment-avatar">#}
+{#                                            <img class="avatar__img" alt="" src="{% static 'main_page/images/team10.jpg' %}">#}
+{#                                        </div>#}
+{#                                        <div class="comment-body">#}
+{#                                            <div class="meta-data">#}
+{#                                                <h3 class="comment__author">محسن میرزایی</h3>#}
+{#                                                <div class="meta-data-inner d-flex">#}
+{#                                                    <span class="ratings d-flex align-items-center mr-1">#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                        <i class="la la-star"></i>#}
+{#                                                    </span>#}
+{#                                                    <p class="comment__date">5 آبان 1400</p>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <p class="comment-content">#}
+{#                                                تور فوق العاد ه عالی بود بود ، خیلی خوشحالم که این سفر رو انتخاب کردم .تور لیدر سفر هم خیلی معدب و کاربلد بودند واقعا توی این وقت کنی که داشتیم جاذب های زیادی رو دیدیم و از سفر لذت بردیم .#}
+{#                                            </p>#}
+{#                                            <div class="comment-reply d-flex align-items-center justify-content-between">#}
+{#                                                <a class="theme-btn" href="#" data-toggle="modal" data-target="#replayPopupForm">#}
+{#                                                    <span class="la la-mail-reply mr-1"></span>پاسخ#}
+{#                                                </a>#}
+{#                                                <div class="reviews-reaction">#}
+{#                                                    <a href="#" class="comment-like"><i class="la la-thumbs-up"></i> 13</a>#}
+{#                                                    <a href="#" class="comment-dislike"><i class="la la-thumbs-down"></i> 2</a>#}
+{#                                                    <a href="#" class="comment-love"><i class="la la-heart-o"></i> 5</a>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div><!-- end comments -->#}
+{#                                    <div class="btn-box load-more text-center">#}
+{#                                        <button class="theme-btn theme-btn-small theme-btn-transparent" type="button">نظرات بیشتر</button>#}
+{#                                    </div>#}
+{#                                </div><!-- end comments-list -->#}
+{#                                <div class="comment-forum padding-top-40px">#}
+{#                                    <div class="form-box">#}
+{#                                        <div class="form-title-wrap">#}
+{#                                            <h3 class="title">نظری بنویس</h3>#}
+{#                                        </div><!-- form-title-wrap -->#}
+{#                                        <div class="form-content">#}
+{#                                            <div class="rate-option p-2">#}
+{#                                                <div class="row">#}
+{#                                                    <div class="col-lg-4 responsive-column">#}
+{#                                                        <div class="rate-option-item">#}
+{#                                                            <label>خدمات</label>#}
+{#                                                            <div class="rate-stars-option">#}
+{#                                                                <input type="checkbox" id="lst1" value="1">#}
+{#                                                                <label for="lst1"></label>#}
+{#                                                                <input type="checkbox" id="lst2" value="2">#}
+{#                                                                <label for="lst2"></label>#}
+{#                                                                <input type="checkbox" id="lst3" value="3">#}
+{#                                                                <label for="lst3"></label>#}
+{#                                                                <input type="checkbox" id="lst4" value="4">#}
+{#                                                                <label for="lst4"></label>#}
+{#                                                                <input type="checkbox" id="lst5" value="5">#}
+{#                                                                <label for="lst5"></label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div><!-- col-lg-4 -->#}
+{#                                                    <div class="col-lg-4 responsive-column">#}
+{#                                                        <div class="rate-option-item">#}
+{#                                                            <label>مکان </label>#}
+{#                                                            <div class="rate-stars-option">#}
+{#                                                                <input type="checkbox" id="l1" value="1">#}
+{#                                                                <label for="l1"></label>#}
+{#                                                                <input type="checkbox" id="l2" value="2">#}
+{#                                                                <label for="l2"></label>#}
+{#                                                                <input type="checkbox" id="l3" value="3">#}
+{#                                                                <label for="l3"></label>#}
+{#                                                                <input type="checkbox" id="l4" value="4">#}
+{#                                                                <label for="l4"></label>#}
+{#                                                                <input type="checkbox" id="l5" value="5">#}
+{#                                                                <label for="l5"></label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div><!-- col-lg-4 -->#}
+{#                                                    <div class="col-lg-4 responsive-column">#}
+{#                                                        <div class="rate-option-item">#}
+{#                                                            <label>سرویس دوره ای</label>#}
+{#                                                            <div class="rate-stars-option">#}
+{#                                                                <input type="checkbox" id="vm1" value="1">#}
+{#                                                                <label for="vm1"></label>#}
+{#                                                                <input type="checkbox" id="vm2" value="2">#}
+{#                                                                <label for="vm2"></label>#}
+{#                                                                <input type="checkbox" id="vm3" value="3">#}
+{#                                                                <label for="vm3"></label>#}
+{#                                                                <input type="checkbox" id="vm4" value="4">#}
+{#                                                                <label for="vm4"></label>#}
+{#                                                                <input type="checkbox" id="vm5" value="5">#}
+{#                                                                <label for="vm5"></label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div><!-- col-lg-4 -->#}
+{#                                                    <div class="col-lg-4 responsive-column">#}
+{#                                                        <div class="rate-option-item">#}
+{#                                                            <label>پاکیزگی</label>#}
+{#                                                            <div class="rate-stars-option">#}
+{#                                                                <input type="checkbox" id="cln1" value="1">#}
+{#                                                                <label for="cln1"></label>#}
+{#                                                                <input type="checkbox" id="cln2" value="2">#}
+{#                                                                <label for="cln2"></label>#}
+{#                                                                <input type="checkbox" id="cln3" value="3">#}
+{#                                                                <label for="cln3"></label>#}
+{#                                                                <input type="checkbox" id="cln4" value="4">#}
+{#                                                                <label for="cln4"></label>#}
+{#                                                                <input type="checkbox" id="cln5" value="5">#}
+{#                                                                <label for="cln5"></label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div><!-- col-lg-4 -->#}
+{#                                                    <div class="col-lg-4 responsive-column">#}
+{#                                                        <div class="rate-option-item">#}
+{#                                                            <label>امکانات رفاهی</label>#}
+{#                                                            <div class="rate-stars-option">#}
+{#                                                                <input type="checkbox" id="f1" value="1">#}
+{#                                                                <label for="f1"></label>#}
+{#                                                                <input type="checkbox" id="f2" value="2">#}
+{#                                                                <label for="f2"></label>#}
+{#                                                                <input type="checkbox" id="f3" value="3">#}
+{#                                                                <label for="f3"></label>#}
+{#                                                                <input type="checkbox" id="f4" value="4">#}
+{#                                                                <label for="f4"></label>#}
+{#                                                                <input type="checkbox" id="f5" value="5">#}
+{#                                                                <label for="f5"></label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div><!-- col-lg-4 -->#}
+{#                                                </div><!-- end row -->#}
+{#                                            </div><!-- end rate-option -->#}
+{#                                            <div class="contact-form-action">#}
+{#                                                <form method="post">#}
+{#                                                    <div class="row">#}
+{#                                                        <div class="col-lg-6 responsive-column">#}
+{#                                                            <div class="input-box">#}
+{#                                                                <label class="label-text">نام</label>#}
+{#                                                                <div class="form-group">#}
+{#                                                                    <span class="la la-user form-icon"></span>#}
+{#                                                                    <input class="form-control" type="text" name="text" placeholder="نام شما">#}
+{#                                                                </div>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                         <div class="col-lg-6 responsive-column">#}
+{#                                                             <div class="input-box">#}
+{#                                                                 <label class="label-text">ایمیل</label>#}
+{#                                                                 <div class="form-group">#}
+{#                                                                     <span class="la la-envelope-o form-icon"></span>#}
+{#                                                                     <input class="form-control" type="email" name="email" placeholder="آدرس ایمیل">#}
+{#                                                                 </div>#}
+{#                                                             </div>#}
+{#                                                        </div>#}
+{#                                                         <div class="col-lg-12">#}
+{#                                                             <div class="input-box">#}
+{#                                                                 <label class="label-text">پیام</label>#}
+{#                                                                 <div class="form-group">#}
+{#                                                                     <span class="la la-pencil form-icon"></span>#}
+{#                                                                     <textarea class="message-control form-control" name="message" placeholder="پیامی بنویس"></textarea>#}
+{#                                                                 </div>#}
+{#                                                             </div>#}
+{#                                                        </div>#}
+{#                                                        <div class="col-lg-12">#}
+{#                                                            <div class="btn-box">#}
+{#                                                                <button type="button" class="theme-btn">ارسال نظر</button>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </form>#}
+{#                                            </div><!-- end contact-form-action -->#}
+{#                                        </div><!-- end form-content -->#}
+{#                                    </div><!-- end form-box -->#}
+{#                                </div><!-- end comment-forum -->#}
+{#                            </div><!-- end single-content-item -->#}
+{#                        </div>#}
+                        <!-- end review-box -->
 
 
                     </div><!-- end single-content-wrap -->
 
                 </div><!-- end col-lg-8 -->
+
+
+
+
+
+
 
                 <div class="col-lg-4">
                     <div class="sidebar single-content-sidebar mb-0">
@@ -652,10 +683,10 @@
                             </div><!-- end sidebar-widget-item -->
                             <div class="btn-box pt-2">
                                 <a href="tour-booking.html" class="theme-btn text-center w-100 mb-2"><i class="la la-shopping-cart mr-2 font-size-18"></i>رزرو</a>
-                                <a href="#" class="theme-btn text-center w-100 theme-btn-transparent"><i class="la la-heart-o mr-2"></i>افزودن به لیست علاقه مندی </a>
+{#                                <a href="#" class="theme-btn text-center w-100 theme-btn-transparent"><i class="la la-heart-o mr-2"></i>افزودن به لیست علاقه مندی </a>#}
                                 <div class="d-flex align-items-center justify-content-between pt-2">
-                                    <a href="#" class="btn theme-btn-hover-gray font-size-15" data-toggle="modal" data-target="#sharePopupForm"><i class="la la-share mr-1"></i>اشتراک گذاری</a>
-                                    <p><i class="la la-eye mr-1 font-size-15 color-text-2"></i>3456</p>
+{#                                    <a href="#" class="btn theme-btn-hover-gray font-size-15" data-toggle="modal" data-target="#sharePopupForm"><i class="la la-share mr-1"></i>اشتراک گذاری</a>#}
+{#                                    <p><i class="la la-eye mr-1 font-size-15 color-text-2"></i>3456</p>#}
                                 </div>
                             </div>
                         </div><!-- end sidebar-widget -->
@@ -675,13 +706,14 @@
                             <p class="font-size-14 line-height-24">با ما تماس بگیر . ما یک تیم متخصص هستیم و دوست داریم با شما صحبت کنیم.</p>
                             <div class="sidebar-list pt-3">
                                 <ul class="list-items">
-                                    <li><i class="la la-phone icon-element mr-2"></i><a href="#" dir="ltr">+ 98 21 8093 3400</a></li>
-                                    <li><i class="la la-envelope icon-element mr-2"></i><a href="mailto:info@trizen.com">info@trizen.com</a></li>
+                                    <li><i class="la la-phone icon-element mr-2"></i><a href="#" dir="ltr">02122016181</a></li>
+                                    <li><i class="la la-envelope icon-element mr-2"></i><a href="mailto:info@trizen.com">info@asemangashtvip.com</a></li>
                                 </ul>
                             </div><!-- end sidebar-list -->
                         </div><!-- end sidebar-widget -->
                     </div><!-- end sidebar -->
-                </div><!-- end col-lg-4 -->
+                </div>
+                <!-- end col-lg-4 -->
 
             </div><!-- end row -->
 
@@ -702,95 +734,96 @@
 <!-- ================================
     START RELATE TOUR AREA
 ================================= -->
-<section class="related-tour-area section--padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading text-center">
-                    <h2 class="sec__title">ممکنه این تور ها رو هم دوست داشته باشی</h2>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-12 -->
-        </div><!-- end row -->
-        <div class="row padding-top-50px">
-            <div class="col-lg-4 responsive-column">
-                <div class="card-item trending-card">
-                    <div class="card-img">
-                        <a href="tour-details.html" class="d-block">
-                            <img src="{% static 'main_page/images/img9.jpg' %}" alt="Destination-img">
-                        </a>
-                        <span class="badge">پرفروش ترین </span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="tour-details.html">تور زمستانه در پیست امپایر استیت</a></h3>
-                        <p class="card-meta">خیابان 124  لا ویستا، نیویورک</p>
-                        <div class="card-rating">
-                            <span class="badge text-white">4.4/5</span>
-                            <span class="review__text">متوسط</span>
-                            <span class="rating__text">(30 نظر)</span>
-                        </div>
-                        <div class="card-price d-flex align-items-center justify-content-between">
-                            <p>
-                                <span class="price__num">1,120  تومان</span>
-                            </p>
-                            <a href="tour-details.html" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- end card-item -->
-            </div><!-- end col-lg-4 -->
-            <div class="col-lg-4 responsive-column">
-                <div class="card-item trending-card">
-                    <div class="card-img">
-                        <a href="tour-details.html" class="d-block">
-                            <img src="{% static 'main_page/images/img10.jpg' %}" alt="Destination-img">
-                            <span class="badge badge-ribbon">تخفیف 24٪</span>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="tour-details.html">تور جنوب ، کلبه های ساحلی</a></h3>
-                        <p class="card-meta">کیش ، ایران</p>
-                        <div class="card-rating">
-                            <span class="badge text-white">4.4/5</span>
-                            <span class="review__text">عالی</span>
-                            <span class="rating__text">(30 نظر)</span>
-                        </div>
-                        <div class="card-price d-flex align-items-center justify-content-between">
-                            <p>
-                                <span class="price__num">1,000  تومان</span>
-                                <span class="price__num before-price color-text-3">1,120  تومان</span>
-                            </p>
-                            <a href="tour-details.html" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- end card-item -->
-            </div><!-- end col-lg-4 -->
-            <div class="col-lg-4 responsive-column">
-                <div class="card-item trending-card">
-                    <div class="card-img">
-                        <a href="tour-details.html" class="d-block">
-                            <img src="{% static 'main_page/images/img11.jpg' %}" alt="Destination-img">
-                        </a>
-                        <span class="badge">ویژه</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="tour-details.html">تور دریایی پل گلدن گیت</a></h3>
-                        <p class="card-meta">خیابان 124  لا ویستا، نیویورک</p>
-                        <div class="card-rating">
-                            <span class="badge text-white">4.4/5</span>
-                            <span class="review__text">جيد</span>
-                            <span class="rating__text">(30 نظر)</span>
-                        </div>
-                        <div class="card-price d-flex align-items-center justify-content-between">
-                            <p>
-                                <span class="price__num">1,120  تومان</span>
-                            </p>
-                            <a href="tour-details.html" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- end card-item -->
-            </div><!-- end col-lg-4 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section><!-- end related-tour-area -->
+{#<section class="related-tour-area section--padding">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-lg-12">#}
+{#                <div class="section-heading text-center">#}
+{#                    <h2 class="sec__title">ممکنه این تور ها رو هم دوست داشته باشی</h2>#}
+{#                </div><!-- end section-heading -->#}
+{#            </div><!-- end col-lg-12 -->#}
+{#        </div><!-- end row -->#}
+{#        <div class="row padding-top-50px">#}
+{#            <div class="col-lg-4 responsive-column">#}
+{#                <div class="card-item trending-card">#}
+{#                    <div class="card-img">#}
+{#                        <a href="tour-details.html" class="d-block">#}
+{#                            <img src="{% static 'main_page/images/img9.jpg' %}" alt="Destination-img">#}
+{#                        </a>#}
+{#                        <span class="badge">پرفروش ترین </span>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <h3 class="card-title"><a href="tour-details.html">تور زمستانه در پیست امپایر استیت</a></h3>#}
+{#                        <p class="card-meta">خیابان 124  لا ویستا، نیویورک</p>#}
+{#                        <div class="card-rating">#}
+{#                            <span class="badge text-white">4.4/5</span>#}
+{#                            <span class="review__text">متوسط</span>#}
+{#                            <span class="rating__text">(30 نظر)</span>#}
+{#                        </div>#}
+{#                        <div class="card-price d-flex align-items-center justify-content-between">#}
+{#                            <p>#}
+{#                                <span class="price__num">1,120  تومان</span>#}
+{#                            </p>#}
+{#                            <a href="tour-details.html" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div><!-- end card-item -->#}
+{#            </div><!-- end col-lg-4 -->#}
+{#            <div class="col-lg-4 responsive-column">#}
+{#                <div class="card-item trending-card">#}
+{#                    <div class="card-img">#}
+{#                        <a href="tour-details.html" class="d-block">#}
+{#                            <img src="{% static 'main_page/images/img10.jpg' %}" alt="Destination-img">#}
+{#                            <span class="badge badge-ribbon">تخفیف 24٪</span>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <h3 class="card-title"><a href="tour-details.html">تور جنوب ، کلبه های ساحلی</a></h3>#}
+{#                        <p class="card-meta">کیش ، ایران</p>#}
+{#                        <div class="card-rating">#}
+{#                            <span class="badge text-white">4.4/5</span>#}
+{#                            <span class="review__text">عالی</span>#}
+{#                            <span class="rating__text">(30 نظر)</span>#}
+{#                        </div>#}
+{#                        <div class="card-price d-flex align-items-center justify-content-between">#}
+{#                            <p>#}
+{#                                <span class="price__num">1,000  تومان</span>#}
+{#                                <span class="price__num before-price color-text-3">1,120  تومان</span>#}
+{#                            </p>#}
+{#                            <a href="tour-details.html" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div><!-- end card-item -->#}
+{#            </div><!-- end col-lg-4 -->#}
+{#            <div class="col-lg-4 responsive-column">#}
+{#                <div class="card-item trending-card">#}
+{#                    <div class="card-img">#}
+{#                        <a href="tour-details.html" class="d-block">#}
+{#                            <img src="{% static 'main_page/images/img11.jpg' %}" alt="Destination-img">#}
+{#                        </a>#}
+{#                        <span class="badge">ویژه</span>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <h3 class="card-title"><a href="tour-details.html">تور دریایی پل گلدن گیت</a></h3>#}
+{#                        <p class="card-meta">خیابان 124  لا ویستا، نیویورک</p>#}
+{#                        <div class="card-rating">#}
+{#                            <span class="badge text-white">4.4/5</span>#}
+{#                            <span class="review__text">جيد</span>#}
+{#                            <span class="rating__text">(30 نظر)</span>#}
+{#                        </div>#}
+{#                        <div class="card-price d-flex align-items-center justify-content-between">#}
+{#                            <p>#}
+{#                                <span class="price__num">1,120  تومان</span>#}
+{#                            </p>#}
+{#                            <a href="tour-details.html" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div><!-- end card-item -->#}
+{#            </div><!-- end col-lg-4 -->#}
+{#        </div><!-- end row -->#}
+{#    </div><!-- end container -->#}
+{#</section>#}
+    <!-- end related-tour-area -->
 <!-- ================================
     END RELATE TOUR AREA
 ================================= -->
@@ -800,37 +833,38 @@
 <!-- ================================
     START CTA AREA
 ================================= -->
-<section class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="cta-content">
-                    <div class="section-heading">
-                        <h2 class="sec__title font-size-30 text-white">از پیشنهاد های شگفت انگیزمون جا نمونی ! <br>
-دریافت تخفیف های شگفتانه فقط از طریق ایمیل .</h2>
-                    </div><!-- end section-heading -->
-                </div>
-            </div><!-- end col-lg-7 -->
-            <div class="col-lg-5">
-                <div class="subscriber-box">
-                    <div class="contact-form-action">
-                        <form action="#">
-                            <div class="input-box">
-                                <label class="label-text text-white">آدرس ایمیلت رو وارد کن</label>
-                                <div class="form-group mb-0">
-                                    <span class="la la-envelope form-icon"></span>
-                                    <input class="form-control" type="email" name="email" placeholder="آدرس ایمیل">
-                                    <button class="theme-btn theme-btn-small submit-btn" type="submit">عضویت</button>
-                                    <span class="font-size-15 pt-1 text-white-50"><i class="la la-lock mr-1"></i>نگران نباش اطلاعاتت پیش ما امنه.</span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-5 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section><!-- end cta-area -->
+{#<section class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px">#}
+{#    <div class="container">#}
+{#        <div class="row align-items-center">#}
+{#            <div class="col-lg-7">#}
+{#                <div class="cta-content">#}
+{#                    <div class="section-heading">#}
+{#                        <h2 class="sec__title font-size-30 text-white">از پیشنهاد های شگفت انگیزمون جا نمونی ! <br>#}
+{#دریافت تخفیف های شگفتانه فقط از طریق ایمیل .</h2>#}
+{#                    </div><!-- end section-heading -->#}
+{#                </div>#}
+{#            </div><!-- end col-lg-7 -->#}
+{#            <div class="col-lg-5">#}
+{#                <div class="subscriber-box">#}
+{#                    <div class="contact-form-action">#}
+{#                        <form action="#">#}
+{#                            <div class="input-box">#}
+{#                                <label class="label-text text-white">آدرس ایمیلت رو وارد کن</label>#}
+{#                                <div class="form-group mb-0">#}
+{#                                    <span class="la la-envelope form-icon"></span>#}
+{#                                    <input class="form-control" type="email" name="email" placeholder="آدرس ایمیل">#}
+{#                                    <button class="theme-btn theme-btn-small submit-btn" type="submit">عضویت</button>#}
+{#                                    <span class="font-size-15 pt-1 text-white-50"><i class="la la-lock mr-1"></i>نگران نباش اطلاعاتت پیش ما امنه.</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                    </div>#}
+{#                </div><!-- end section-heading -->#}
+{#            </div><!-- end col-lg-5 -->#}
+{#        </div><!-- end row -->#}
+{#    </div><!-- end container -->#}
+{#</section>#}
+    <!-- end cta-area -->
 <!-- ================================
     END CTA AREA
 ================================= -->
@@ -852,6 +886,8 @@
         });
     });
 </script>
+
+
 
     <!-- for برنامه سفر section -->
     <script>

@@ -6,7 +6,7 @@
 
 
 {% block title %}
-   لیست  تورها
+   نتایج جستجو
 {% endblock %}
 
 {% block content %}
@@ -23,7 +23,7 @@
                 <div class="col-lg-6">
                     <div class="breadcrumb-content">
                         <div class="section-heading">
-                            <h2 class="sec__title text-white">همه تور ها رو اینجا میتونی ببینی</h2>
+                            <h2 class="sec__title text-white">نتایج جستجوی تورهای شما</h2>
                         </div>
                     </div><!-- end breadcrumb-content -->
                 </div><!-- end col-lg-6 -->
@@ -32,7 +32,7 @@
                         <ul class="list-items">
                             <li><a href="{% url 'main-page' %}">صفحه اصلی</a></li>
 {#                            <li>تور</li>#}
-                            <li>لیست تور ها</li>
+                            <li>نتایج جستجو</li>
                         </ul>
                     </div><!-- end breadcrumb-list -->
                 </div><!-- end col-lg-6 -->
@@ -55,6 +55,18 @@
 <section class="card-area section--padding padding-right-100px padding-left-100px">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-lg-12">
+                <div class="filter-wrap margin-bottom-30px">
+                    <div class="filter-top d-flex align-items-center justify-content-between pb-4">
+                        <div>
+                            <h3 class="title font-size-24">تعداد 2 عدد تور پیدا شد</h3>
+                            <p class="font-size-14 line-height-20 pt-1">با اطمینان رزرو کنید: بدون هزینه رزرو </p>
+                        </div>
+
+                    </div><!-- end filter-top -->
+                </div><!-- end filter-wrap -->
+
+            </div>
 
         </div><!-- end row -->
         <div class="row">
