@@ -1,4 +1,6 @@
 from django.db import models
+from tinymce.models import HTMLField
+
 
 
 class Feature(models.Model):
@@ -62,18 +64,95 @@ class Accommodation(models.Model):
 
 
 
-class RefundPolicyForFlight(models.Model):
-    penalty_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    cancellation_notice_period = models.IntegerField()
+
+
+
+
+
+
+class Tour(models.Model):
+    title = models.CharField(max_length=100, verbose_name='عنوان', null=True, blank=True)
+    slug = models.SlugField(default="", null=False, blank=True, db_index=True, max_length=200, unique=True)
+    description = HTMLField(verbose_name='توضیحات', null=True, blank=True)
+    main_image = models.ImageField(upload_to='images/tour-image', verbose_name='تصویر اصلی', blank=True, null=True)
+    video = models.FileField(upload_to='video/tour',  verbose_name='ویدیو تور', null=True, blank=True)
+    status = models.BooleanField(default=False, verbose_name='فعال / غیر فعال')
+    location = models.TextField(verbose_name='مکان تور در نقشه', null=True, blank=True)
+    duration = models.CharField(max_length=100, verbose_name='مدت زمان', null=True, blank=True)
+
+    origin = models.CharField(max_length=100,verbose_name='مبدا')
+    destination = models.CharField(max_length=100, verbose_name='مقصد')
+
+    departure_date = models.DateTimeField(verbose_name='تاریخ رفت')
+    return_date = models.DateTimeField(verbose_name='تاریخ برگشت')
+
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, verbose_name='اطلاعات اقامتگاه')
+    # flight = models.OneToOneField(Flight, on_delete=models.CASCADE, verbose_name='اطلاعات پرواز')
+
+    rating = models.IntegerField(verbose_name='امتیاز')
+    seller = models.CharField(max_length=100, verbose_name='فروشنده تور')
+    services = models.TextField(verbose_name='خدمات تور')
+
+    price = models.IntegerField(verbose_name='قیمت تور')
+
+
 
     def __str__(self):
-        return f"قوانین استرداد پرواز - جریمه: {self.penalty_amount}, زمان اعلام کنسلی: {self.cancellation_notice_period} روز"
+        return f"Tour {self.accommodation.name}"
 
     class Meta:
-        verbose_name = 'قوانین استرداد پرواز'
-        verbose_name_plural = 'قوانین استرداد پرواز'
+        verbose_name = 'تور'
+        verbose_name_plural = 'تور ها'
+
+class TourImageGallery(models.Model):
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور')
+    title = models.CharField(max_length=100, verbose_name='عنوان تصویر')
+    image = models.ImageField(upload_to='images/tour-image', verbose_name='تصویر')
+
+
+    def __str__(self):
+        return f"گالری تصاویر {self.title}"
+
+
+    class Meta:
+        verbose_name = 'تصویر'
+        verbose_name_plural = 'تصاویر'
+
+
+class Itinerary(models.Model):
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور', null=True, blank=True)
+    place = models.CharField(max_length=100, verbose_name='نام مکان')
+    day = models.IntegerField(verbose_name='روز چندم')
+    short_description = models.TextField(max_length=450, verbose_name='توضیحات کوتاه')
+
+    def __str__(self):
+        return f"برنامه سفر {self.place}"
+
+
+    class Meta:
+        verbose_name = 'برنامه سفر'
+        verbose_name_plural = 'برنامه های سفر'
+
+
+class FAQ(models.Model):
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور', null=True, blank=True)
+    question = models.CharField(max_length=100, verbose_name='سوال')
+    answer = models.TextField(max_length=450, verbose_name='جواب')
+
+    def __str__(self):
+        return self.question
+
+
+    class Meta:
+        verbose_name = 'سوالات متداول'
+        verbose_name_plural = 'سوالات متداول'
+
+
+
 
 class Flight(models.Model):
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور', null=True, blank=True)
+
     FLIGHT_TYPES = [
         ('one_way', 'رفت'),
         ('round_trip', 'برگشت'),
@@ -112,93 +191,13 @@ class Flight(models.Model):
 
 
 
-
-
-
-
-
-
-class Tour(models.Model):
-    title = models.CharField(max_length=100, verbose_name='عنوان', null=True, blank=True)
-    slug = models.SlugField(default="", null=False, blank=True, db_index=True, max_length=200, unique=True)
-    description = models.TextField(verbose_name='توضیحات', null=True, blank=True)
-    # itinerary = models.OneToOneField(Itinerary, on_delete=models.CASCADE, verbose_name='برنامه سفر', null=True, blank=True)
-    main_image = models.ImageField(upload_to='images/tour-image', verbose_name='تصویر اصلی', blank=True, null=True)
-    video = models.FileField(upload_to='video/tour',  verbose_name='ویدیو تور', null=True, blank=True)
-    status = models.BooleanField(default=False, verbose_name='فعال / غیر فعال')
-    location = models.TextField(verbose_name='مکان تور در نقشه', null=True, blank=True)
-    duration = models.CharField(max_length=100, verbose_name='مدت زمان', null=True, blank=True)
-
-
-    origin = models.CharField(max_length=100,verbose_name='مبدا')
-    destination = models.CharField(max_length=100, verbose_name='مقصد')
-
-    departure_date = models.DateField(verbose_name='تاریخ رفت')
-    return_date = models.DateField(verbose_name='تاریخ برگشت')
-
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, verbose_name='اطلاعات اقامتگاه')
-    flight = models.OneToOneField(Flight, on_delete=models.CASCADE, verbose_name='اطلاعات پرواز')
-
-    rating = models.IntegerField(verbose_name='امتیاز')
-    seller = models.CharField(max_length=100, verbose_name='فروشنده تور')
-    services = models.TextField(verbose_name='خدمات تور')
-
-    price = models.IntegerField(verbose_name='قیمت تور')
-
-
-
+class RefundPolicyForFlight(models.Model):
+    penalty_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    cancellation_notice_period = models.IntegerField()
 
     def __str__(self):
-        return f"Tour {self.accommodation.name}"
-
-
-    class Meta:
-        verbose_name = 'تور'
-        verbose_name_plural = 'تور ها'
-
-class TourImageGallery(models.Model):
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور')
-    title = models.CharField(max_length=100, verbose_name='عنوان تصویر')
-    image = models.ImageField(upload_to='images/tour-image', verbose_name='تصویر')
-
-
-    def __str__(self):
-        return f"گالری تصاویر {self.title}"
-
+        return f"قوانین استرداد پرواز - جریمه: {self.penalty_amount}, زمان اعلام کنسلی: {self.cancellation_notice_period} روز"
 
     class Meta:
-        verbose_name = 'تصویر'
-        verbose_name_plural = 'تصاویر'
-
-
-
-
-
-
-class Itinerary(models.Model):
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور', null=True, blank=True)
-    place = models.CharField(max_length=100, verbose_name='نام مکان')
-    day = models.IntegerField(verbose_name='روز چندم')
-    short_description = models.TextField(max_length=450, verbose_name='توضیحات کوتاه')
-
-    def __str__(self):
-        return f"برنامه سفر {self.place}"
-
-
-    class Meta:
-        verbose_name = 'برنامه سفر'
-        verbose_name_plural = 'برنامه های سفر'
-
-
-class FAQ(models.Model):
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, verbose_name='تور', null=True, blank=True)
-    question = models.CharField(max_length=100, verbose_name='سوال')
-    answer = models.TextField(max_length=450, verbose_name='جواب')
-
-    def __str__(self):
-        return self.question
-
-
-    class Meta:
-        verbose_name = 'سوالات متداول'
-        verbose_name_plural = 'سوالات متداول'
+        verbose_name = 'قوانین استرداد پرواز'
+        verbose_name_plural = 'قوانین استرداد پرواز'
