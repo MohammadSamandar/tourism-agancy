@@ -2703,7 +2703,7 @@ body {
     -webkit-border-radius: 5px;
     -moz-border-radius   : 5px;
     border-radius        : 5px;
-    width                : 130px;
+    width                : 200px;
     text-align           : center;
     padding-top          : 2px;
     padding-bottom       : 2px
@@ -3510,7 +3510,7 @@ body {
 
 .breadcrumb-area {
     padding-top        : 90px;
-    padding-bottom     : 410px;
+    padding-bottom     : 100px;
     position           : relative;
     z-index            : 1;
     background-size    : cover;
@@ -11723,4 +11723,8 @@ body {
     font-size  : 40px;
     color      : #181818;
     font-weight: 700
+}
+
+#breadcrumb-zone{
+    padding-bottom : 410px;
 }

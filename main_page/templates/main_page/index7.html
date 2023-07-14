@@ -34,13 +34,24 @@
                     </div><!-- end hero-content -->
                     <div class="search-fields-container">
                         <div class="contact-form-action">
+
+
                             <form action="#" class="row">
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">مبدا</label>
+                                        <div class="form-group">
+                                            <span class="la la-map-marker form-icon"></span>
+                                            <input class="form-control" type="text" placeholder="از کجا میخوای  شروع کنی؟">
+                                        </div>
+                                    </div>
+                                </div><!-- end col-lg-3 -->
                                 <div class="col-lg-3 pr-0">
                                     <div class="input-box">
                                         <label class="label-text">مقصد</label>
                                         <div class="form-group">
                                             <span class="la la-map-marker form-icon"></span>
-                                            <input class="form-control" type="text" placeholder="کجا میخوای بری ؟">
+                                            <input class="form-control" type="text" placeholder="به کجا میخوای بری ؟">
                                         </div>
                                     </div>
                                 </div><!-- end col-lg-3 -->
@@ -53,40 +64,41 @@
                                         </div>
                                     </div>
                                 </div><!-- end col-lg-3 -->
-                                <div class="col-lg-3 pr-0">
-                                    <div class="input-box">
-                                        <label class="label-text">مسافران</label>
-                                        <div class="form-group">
-                                            <div class="dropdown dropdown-contain">
-                                                <a class="dropdown-toggle dropdown-btn" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                                    <span>مسافران <span class="qtyTotal guestTotal">0</span></span>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-wrap">
-                                                    <div class="dropdown-item">
-                                                        <div class="qty-box d-flex align-items-center justify-content-between">
-                                                            <label>بزرگسال</label>
-                                                            <div class="qtyBtn d-flex align-items-center">
-                                                                <div class="qtyDec"><i class="la la-minus"></i></div>
-                                                                <input type="text" name="qtyInput" value="0">
-                                                                <div class="qtyInc"><i class="la la-plus"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <div class="qty-box d-flex align-items-center justify-content-between">
-                                                            <label>کودک</label>
-                                                            <div class="qtyBtn d-flex align-items-center">
-                                                                <div class="qtyDec"><i class="la la-minus"></i></div>
-                                                                <input type="text" name="qtyInput" value="0">
-                                                                <div class="qtyInc"><i class="la la-plus"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end panel-dropdown -->
-                                        </div>
-                                    </div>
-                                </div><!-- end col-lg-3 -->
+{#                                <div class="col-lg-3 pr-0">#}
+{#                                    <div class="input-box">#}
+{#                                        <label class="label-text">مسافران</label>#}
+{#                                        <div class="form-group">#}
+{#                                            <div class="dropdown dropdown-contain">#}
+{#                                                <a class="dropdown-toggle dropdown-btn" href="#" role="button" data-toggle="dropdown" aria-expanded="false">#}
+{#                                                    <span>مسافران <span class="qtyTotal guestTotal">0</span></span>#}
+{#                                                </a>#}
+{#                                                <div class="dropdown-menu dropdown-menu-wrap">#}
+{#                                                    <div class="dropdown-item">#}
+{#                                                        <div class="qty-box d-flex align-items-center justify-content-between">#}
+{#                                                            <label>بزرگسال</label>#}
+{#                                                            <div class="qtyBtn d-flex align-items-center">#}
+{#                                                                <div class="qtyDec"><i class="la la-minus"></i></div>#}
+{#                                                                <input type="text" name="qtyInput" value="0">#}
+{#                                                                <div class="qtyInc"><i class="la la-plus"></i></div>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                    <div class="dropdown-item">#}
+{#                                                        <div class="qty-box d-flex align-items-center justify-content-between">#}
+{#                                                            <label>کودک</label>#}
+{#                                                            <div class="qtyBtn d-flex align-items-center">#}
+{#                                                                <div class="qtyDec"><i class="la la-minus"></i></div>#}
+{#                                                                <input type="text" name="qtyInput" value="0">#}
+{#                                                                <div class="qtyInc"><i class="la la-plus"></i></div>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div><!-- end panel-dropdown -->#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+                                <!-- end col-lg-3 -->
                                 <div class="col-lg-3">
                                     <div class="input-box">
                                         <label class="label-text">قیمت</label>
@@ -109,7 +121,7 @@
                                 </div><!-- end col-lg-3 -->
                             </form>
                             <div class="btn-box pt-2">
-                                <a href="activity-search-result.html" class="theme-btn">جستجوی تور</a>
+                                <a href="{% url 'tour-search-result' %}" class="theme-btn">جستجوی تور</a>
                             </div>
                         </div>
                     </div>
@@ -188,11 +200,13 @@
             </div><!-- end col-lg-12 -->
         </div><!-- end row -->
         <div class="row padding-top-50px">
+
             <div class="col-lg-12">
 
-                <div class="trending-carousel carousel-action">
-                    {% for tour in tours %}
+                <div class="col-lg-4 responsive-column">
 
+
+                    {% for tour in tours %}
                     <div class="card-item trending-card mb-0">
                         <div class="card-img">
                             <a href="{% url 'tour-detail' slug=tour.slug %}" class="d-block">
@@ -203,10 +217,10 @@
                         <div class="card-body">
                             <h3 class="card-title mb-0"><a href="{% url 'tour-detail' slug=tour.slug %}">{{ tour.title }}</a></h3>
                             <p class="card-meta">{{ tour.description }}</p>
-                            <div class="card-rating">
+{#                            <div class="card-rating">#}
 {#                                <span class="badge text-white">{{ tour.rating }}</span>#}
 {#                                <span class="rating__text">30 نظر</span>#}
-                            </div>
+{#                            </div>#}
                             <div class="card-price d-flex align-items-center justify-content-between">
                                 <span><i class="la la-clock mr-1"></i>{{ tour.duration }}</span>
                                 <p>
@@ -215,11 +229,14 @@
                                 </p>
                             </div>
                         </div>
-                    </div><!-- end card-item -->
-
+                    </div>
+                        <!-- end card-item -->
                     {% endfor %}
 
-                </div><!-- end car-carousel -->
+
+                </div>
+                    <!-- end car-carousel -->
+
             </div><!-- end col-lg-12 -->
         </div><!-- end row -->
     </div><!-- end container -->
@@ -246,7 +263,7 @@
                             <p class="sec__desc text-white">به 2000+ تور لیدر محلی و 1200+ مشارکت‌کننده از 3000 شهر ملحق شو</p>
                         </div><!-- end section-heading -->
                         <div class="btn-box">
-                            <a href="#" class="theme-btn border-0">بگرد <i class="la la-arrow-right ml-1"></i></a>
+                            <a href="{% url 'tour-list' %}" class="theme-btn border-0">بگرد <i class="la la-arrow-right ml-1"></i></a>
                         </div>
                     </div><!-- end discount-content -->
                 </div>

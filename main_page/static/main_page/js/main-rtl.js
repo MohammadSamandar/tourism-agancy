@@ -522,8 +522,8 @@ Version:        1.0
             $(rangeSlider).slider({
                 range: true,
                 min: 0,
-                max: 1000,
-                values: [ 40, 800 ],
+                max: 50000000,
+                values: [ 500000, 10000000 ],
                 slide: function( event, ui ) {
                     $(rangeSliderAmount).val( ui.values[ 0 ] + "تومان - " + ui.values[ 1 ] + "تومان");
                 }

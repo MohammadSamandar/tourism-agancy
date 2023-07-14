@@ -6,7 +6,7 @@ from manage_tours.models import Tour
 # Create your views here.
 
 def main_page(request):
-    tours = Tour.objects.filter(status=True).order_by('price')[0:5]
+    tours = Tour.objects.filter(status=True).distinct()[:5]
 
     context = {
         'tours': tours,
