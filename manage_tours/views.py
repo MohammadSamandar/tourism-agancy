@@ -6,7 +6,7 @@ from .models import Tour
 
 def tour_list(request):
 
-    tours = Tour.objects.all().order_by('price')
+    tours = Tour.objects.filter(status=True).order_by('price')
 
     context = {
         'tours': tours,
@@ -41,12 +41,10 @@ def tour_booking(request):
 
 
 def tour_search_result(request):
-
-    tours = Tour.objects.all()
+    tours = Tour.objects.filter(status=True).order_by('price')
 
     context = {
-        'tour': tours,
+        'tours': tours,
     }
 
-
-    return render(request, 'manage_tours/tour-search-result.html', context)
+    return render(request, 'manage_tours/search-result.html', context)
