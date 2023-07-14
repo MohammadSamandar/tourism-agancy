@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_render_partial',
     'sorl.thumbnail',
-    
+    'tinymce',
+    'jalali_date',
+
     'manage_user',
     'manage_tours',
     'main_page',
@@ -55,6 +57,7 @@ INSTALLED_APPS = [
     'order_module',
     'site_module',
     'contact_us',
+    'template_tags_module',
 
 ]
 
@@ -146,9 +149,10 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "STATIC"
+    os.path.join(BASE_DIR, 'main_page/static'), # for development
 ]
-STATIC_ROOT = BASE_DIR / 'static'
+
+STATIC_ROOT = BASE_DIR / 'static' # for production
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
@@ -177,3 +181,77 @@ LOGIN_URL = '/login/'
 
 
 SANDBOX = False
+
+
+
+# default settings (optional)
+JALALI_DATE_DEFAULTS = {
+   'Strftime': {
+        'date': '%y/%m/%d',
+        'datetime': '%H:%M:%S _ %y/%m/%d',
+    },
+    'Static': {
+        'js': [
+            # loading datepicker
+            'admin/js/django_jalali.min.js',
+            # OR
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.core.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/calendar.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc-fa.js',
+            # 'admin/js/main.js',
+        ],
+        'css': {
+            'all': [
+                'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css',
+            ]
+        }
+    },
+}
+
+# LANGUAGE_CODE = 'fa'
+#
+# import locale
+# locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
+
+
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    'width': 950,
+    'height': 700,
+    'image_class_list': [
+        {'title': 'Responsive', 'value': 'img-responsive'},
+    ],
+    # 'images_upload_class': 'img-responsive',
+    # 'content_css': staticfiles_storage.url('python_course/python-course/css/index.css'),
+    # 'images_max_width': 1000,
+
+    'image_uploadtab': True,
+    'cleanup_on_startup': True,
+    'paste_data_images': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',
+    'theme': 'silver',
+    'plugins': '''
+            textcolor save link image media preview codesample contextmenu quickbars
+            table code lists fullscreen  insertdatetime  nonbreaking tabfocus
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr template
+            anchor pagebreak directionality emoticons image imagetools toc textpattern
+            ''',
+    'toolbar1': '''
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright aligncenter alignjustify |
+             ltr rtl  | indent outdent | bullist numlist table | emoticons toc template
+            | link image media | codesample | visualblocks visualchars | charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
+
+    'font_formats': 'B Titr=B Titr; vazir=vazir;',
+    'extended_valid_elements' : "emstart,emend",
+    'custom_elements': "emstart,emend",
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+    'inline_styles' : False,
+}
